@@ -66,7 +66,7 @@ public class TestClient {
 
     public static void main(String[] args){
         try{
-            TestClient client = new TestClient("localhost", 22300);
+            TestClient client = new TestClient("68.183.148.234", 22300);
             client.initializeStreams();
             client.stayConnected();
         }catch (Exception e){
