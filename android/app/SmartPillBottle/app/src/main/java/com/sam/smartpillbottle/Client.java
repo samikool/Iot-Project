@@ -1,37 +1,40 @@
+package com.sam.smartpillbottle;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class TestClient implements Runnable{
+public class Client implements Runnable{
     private String ip;
     private int port;
     private Socket socket;
     private ObjectOutputStream outputBuffer;
     private ObjectInputStream inputBuffer;
 
-    public TestClient(String ip, int port) throws IOException{
+    public Client(String ip, int port) throws IOException{
         this.ip = ip;
         this.port = port;
-        this.socket = new Socket(InetAddress.getByName(ip),port);
+
     }
 
-    public TestClient(String ip, String port) throws IOException {
+    public Client(String ip, String port) throws IOException {
         this(ip, Integer.valueOf(port));
     }
 
-    public void stayConnected(){
+    public void connect() {
         try{
-            if(inputBuffer.readInt() == 1){
-                closeConnection();
-            }
-        }catch (IOException e){
-            System.err.println("Unable to read data...");
-            System.err.println("Closing connection...");
-            closeConnection();
+            this.socket = new Socket(InetAddress.getByName(ip),port);
+            System.out.println(socket.isConnected());
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println(e);
         }
     }
 
@@ -48,6 +51,18 @@ public class TestClient implements Runnable{
         }catch (IOException e){
             System.err.println("Error initializing buffers...");
             System.err.println(e);
+        }
+    }
+
+    public void stayConnected(){
+        try{
+            if(inputBuffer.readInt() == 1){
+                closeConnection();
+            }
+        }catch (IOException e){
+            System.err.println("Unable to read data...");
+            System.err.println("Closing connection...");
+            closeConnection();
         }
     }
 
@@ -68,17 +83,24 @@ public class TestClient implements Runnable{
 
     @Override
     public void run() {
+        try{
+            connect();
+            initializeStreams();
+            stayConnected();
+        }catch (Exception e){
+            System.err.println(e);
+        }
+
         initializeStreams();
         stayConnected();
-        closeConnection();
     }
 
     public static void main(String[] args){
         try{
-            TestClient client = new TestClient("68.183.148.234", 4044);
-            ExecutorService executor = Executors.newCachedThreadPool();
-            executor.execute(client);
-            executor.shutdown();
+            Client client = new Client("68.183.148.234", 4044);
+            client.connect();
+            client.initializeStreams();
+            client.closeConnection();
         }catch (Exception e){
             System.err.println(e);
         }
