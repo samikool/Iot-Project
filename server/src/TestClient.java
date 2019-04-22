@@ -31,10 +31,9 @@ public class TestClient {
             System.err.println("Closing connection...");
             closeConnection();
         }
-
     }
 
-    public void intializeStreams(){
+    public void initializeStreams(){
         try{
             //get output buffer initialized
             outputBuffer = new ObjectOutputStream(socket.getOutputStream());
@@ -68,7 +67,7 @@ public class TestClient {
     public static void main(String[] args){
         try{
             TestClient client = new TestClient("localhost", 22300);
-            client.intializeStreams();
+            client.initializeStreams();
             client.stayConnected();
         }catch (Exception e){
             System.err.println(e);
