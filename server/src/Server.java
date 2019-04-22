@@ -26,7 +26,7 @@ public class Server {
 
     //constructor to catch strings as input for port
     //TODO: error checking
-    public Server(String port) throws IOException{
+    public Server(String port) {
         this(Integer.valueOf(port));
     }
 
@@ -133,7 +133,7 @@ public class Server {
 
     public static void main(String[] args){
         try{
-            Server testServer = new Server("22300");
+            Server testServer = new Server("4044");
             testServer.start();
 
 
