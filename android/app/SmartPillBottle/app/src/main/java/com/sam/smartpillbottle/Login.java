@@ -1,5 +1,6 @@
 package com.sam.smartpillbottle;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,10 +40,18 @@ public class Login extends AppCompatActivity {
                     //client.initializeStreams();
                     //client.stayConnected();
                     executor.execute(client);
-                    executor.shutdown();
+                    //executor.shutdown();
                 }catch (IOException e) {
                     System.err.println(e);
                 }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MedicineList medicineList = new MedicineList();
+
             }
         });
 
