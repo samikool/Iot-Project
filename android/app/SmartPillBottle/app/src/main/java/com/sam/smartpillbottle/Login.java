@@ -18,9 +18,11 @@ public class Login extends AppCompatActivity {
     private EditText usernameBox;
     private EditText passwordBox;
     private static Connection connection;
-    private ExecutorService executor;
+    private static ExecutorService executor;
 
     public static Connection getConnection(){return connection;}
+
+    public static ExecutorService getExecutor(){return executor;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

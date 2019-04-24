@@ -8,10 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.concurrent.ExecutorService;
 import java.util.zip.DataFormatException;
 
 public class MedicineList extends AppCompatActivity {
     private Connection connection;
+    private ServerRequester serverRequester;
+    private ServerSender serverSender;
+    private ExecutorService executor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +24,24 @@ public class MedicineList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         connection = Login.getConnection();
+        executor = Login.getExecutor();
+        serverRequester = new ServerRequester(connection);
+        serverSender = new ServerSender(connection);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addMedicineButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String test = "testing123";
-                connection.sendData(test);
-                String testing = null;
-                try{
-                    testing = (String) connection.receiveData();
-                }catch (DataFormatException e){
-                    e.printStackTrace();
+                serverSender.setData(test);
+                executor.execute(serverSender);
+                executor.execute(serverRequester);
+                while(!serverRequester.dataReady()){
+
                 }
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+                Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
