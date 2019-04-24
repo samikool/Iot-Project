@@ -7,10 +7,6 @@ public class ServerRequester implements Runnable{
     private Object data;
     private volatile boolean dataReady;
 
-    public boolean dataReady() {
-        return dataReady;
-    }
-
     public ServerRequester(Connection connection){
         this.connection = connection;
         this.data = null;
@@ -18,6 +14,13 @@ public class ServerRequester implements Runnable{
     }
 
     public Object getData() {
+        while(!dataReady){
+            try{
+                wait();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         dataReady = false;
         return data;
     }
@@ -27,6 +30,7 @@ public class ServerRequester implements Runnable{
         try{
             this.data = connection.receiveData();
             dataReady = true;
+            
         }catch (DataFormatException e){
             e.printStackTrace();
         }

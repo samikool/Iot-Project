@@ -36,10 +36,6 @@ public class MedicineList extends AppCompatActivity {
                 serverSender.setData(test);
                 executor.execute(serverSender);
                 executor.execute(serverRequester);
-                while(!serverRequester.dataReady()){
-
-                }
-
 
                 Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

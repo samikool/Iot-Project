@@ -19,6 +19,8 @@ public class Login extends AppCompatActivity {
     private EditText passwordBox;
     private static Connection connection;
     private static ExecutorService executor;
+    private ServerRequester serverRequester;
+    private ServerSender serverSender;
 
     public static Connection getConnection(){return connection;}
 
@@ -44,9 +46,12 @@ public class Login extends AppCompatActivity {
                     Snackbar loginStatus = Snackbar.make(v, "Attempting to login", Snackbar.LENGTH_LONG);
                     loginStatus.show();
                     executor.execute(connection);
+                    serverRequester = new ServerRequester(connection);
+                    serverSender = new ServerSender(connection);
 
                     Intent showMedicine = new Intent(Login.this, MedicineList.class);
                     startActivity(showMedicine);
+                    finish();
                     //executor.shutdown();
                 }catch (IOException e) {
                     System.err.println(e);

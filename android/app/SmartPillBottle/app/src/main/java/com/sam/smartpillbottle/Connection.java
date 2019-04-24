@@ -17,6 +17,7 @@ public class Connection implements Runnable {
     private boolean done = false;
     private volatile boolean connected = false;
 
+
     public Connection(String ip, int port) throws IOException{
         this.ip = ip;
         this.port = port;
@@ -24,6 +25,10 @@ public class Connection implements Runnable {
 
     public Connection(String ip, String port) throws IOException {
         this(ip, Integer.valueOf(port));
+    }
+
+    public boolean isConnected(){
+        return this.connected;
     }
 
     public void connect() {
@@ -55,6 +60,11 @@ public class Connection implements Runnable {
     public void processConnection(){
         connected = true;
         while(!done){
+            try{
+                wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
 
         }
     }
