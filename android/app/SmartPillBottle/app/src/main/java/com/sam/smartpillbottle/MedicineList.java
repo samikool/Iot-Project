@@ -21,6 +21,8 @@ public class MedicineList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_list);
+        MedicineList medicineList = findViewById(R.layout.activity_medicine_list);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         connection = Login.getConnection();
