@@ -4,27 +4,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.zip.DataFormatException;
 
-public class Client implements Runnable{
+public class Connection implements Runnable {
     private String ip;
     private int port;
     private Socket socket;
-    private ObjectOutputStream outputBuffer;
-    private ObjectInputStream inputBuffer;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private boolean done = false;
+    private volatile boolean connected = false;
 
-    public Client(String ip, int port) throws IOException{
+    public Connection(String ip, int port) throws IOException{
         this.ip = ip;
         this.port = port;
-
     }
 
-    public Client(String ip, String port) throws IOException {
+    public Connection(String ip, String port) throws IOException {
         this(ip, Integer.valueOf(port));
     }
 
@@ -41,11 +39,11 @@ public class Client implements Runnable{
     public void initializeStreams(){
         try{
             //get output buffer initialized
-            outputBuffer = new ObjectOutputStream(socket.getOutputStream());
-            outputBuffer.flush();
+            output = new ObjectOutputStream(socket.getOutputStream());
+            output.flush();
 
             //get input buffer initialized
-            inputBuffer = new ObjectInputStream(socket.getInputStream());
+            input = new ObjectInputStream(socket.getInputStream());
 
             System.out.println("Buffers successfully initialized");
         }catch (IOException e){
@@ -54,15 +52,10 @@ public class Client implements Runnable{
         }
     }
 
-    public void stayConnected(){
-        try{
-            if(inputBuffer.readInt() == 1){
-                closeConnection();
-            }
-        }catch (IOException e){
-            System.err.println("Unable to read data...");
-            System.err.println("Closing connection...");
-            closeConnection();
+    public void processConnection(){
+        connected = true;
+        while(!done){
+
         }
     }
 
@@ -70,37 +63,52 @@ public class Client implements Runnable{
         System.out.println("Attempting to close connection with server");
         try{
             socket.close();
-            inputBuffer.close();
-            outputBuffer.close();
-            System.out.println("Client connection closed" );
+            input.close();
+            output.close();
+            System.out.println("Connection connection closed" );
 
         }catch (IOException e){
             System.err.println("Error closing client connection");
             System.err.println(e);
         }
-
     }
 
+    public void sendData(Object data){
+        try{
+            output.writeObject(data);
+            output.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public Object receiveData() throws DataFormatException {
+        try{
+            return input.readObject();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        throw new DataFormatException("Data unsuccessfully read");
+    }
+
+    //Runnable interface
     @Override
     public void run() {
         try{
             connect();
             initializeStreams();
-            stayConnected();
+            processConnection();
         }catch (Exception e){
             System.err.println(e);
         }
-
-        initializeStreams();
-        stayConnected();
     }
 
     public static void main(String[] args){
         try{
-            Client client = new Client("68.183.148.234", 4044);
-            client.connect();
-            client.initializeStreams();
-            client.closeConnection();
+            Connection connection = new Connection("68.183.148.234", 4044);
+            connection.connect();
+            connection.initializeStreams();
+            connection.closeConnection();
         }catch (Exception e){
             System.err.println(e);
         }

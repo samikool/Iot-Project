@@ -1,6 +1,7 @@
 package com.sam.smartpillbottle;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +17,10 @@ public class Login extends AppCompatActivity {
     private Button registerButton;
     private EditText usernameBox;
     private EditText passwordBox;
-    private Client client;
+    private static Connection connection;
     private ExecutorService executor;
+
+    public static Connection getConnection(){return connection;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    client = new Client("68.183.148.234",4044);
-                    //client.connect();
-                    //client.initializeStreams();
-                    //client.stayConnected();
-                    executor.execute(client);
+                    connection = new Connection("68.183.148.234",4044);
+                    Snackbar loginStatus = Snackbar.make(v, "Attempting to login", Snackbar.LENGTH_LONG);
+                    loginStatus.show();
+                    executor.execute(connection);
+
+                    Intent showMedicine = new Intent(Login.this, MedicineList.class);
+                    startActivity(showMedicine);
                     //executor.shutdown();
                 }catch (IOException e) {
                     System.err.println(e);
@@ -50,8 +55,8 @@ public class Login extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MedicineList medicineList = new MedicineList();
-
+                startActivity(new Intent( Login.this, MedicineList.class));
+                finish();
             }
         });
 

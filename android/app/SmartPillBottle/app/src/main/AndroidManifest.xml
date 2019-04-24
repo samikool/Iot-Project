@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".medicineList"
+            android:name=".MedicineList"
             android:label="@string/title_activity_medicine_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

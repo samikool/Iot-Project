@@ -53,8 +53,8 @@ public class Server {
     private class ConnectionHandler implements Runnable{
         private Socket clientSocket;
         private int clientID;
-        private ObjectInputStream inputBuffer;
-        private ObjectOutputStream outputBuffer;
+        private ObjectInputStream input;
+        private ObjectOutputStream output;
         private boolean activeConnection;
 
         public ConnectionHandler(int id){
@@ -70,11 +70,11 @@ public class Server {
         public void initializeBuffers(){
             try{
                 //get output buffer initialized
-                outputBuffer = new ObjectOutputStream(clientSocket.getOutputStream());
-                outputBuffer.flush();
+                output = new ObjectOutputStream(clientSocket.getOutputStream());
+                output.flush();
 
                 //get input buffer initialized
-                inputBuffer = new ObjectInputStream(clientSocket.getInputStream());
+                input = new ObjectInputStream(clientSocket.getInputStream());
 
                 System.out.println("Buffers successfully initialized");
             }catch (IOException e){
@@ -89,24 +89,11 @@ public class Server {
             int secondsActive = 0;
             while (activeConnection){
                 try{
-                    Thread.sleep(1000);
-                    secondsActive += 1;
+                    String command = (String) input.readObject();
+                    System.out.println(command);
+                    output.writeObject(command);
+                    output.flush();
                 }catch (Exception e){}
-
-                if(secondsActive == 15){
-
-                    /*try{
-                        outputBuffer.write(1);
-                    }catch (Exception e){
-                        System.err.println(e);
-                    }finally {
-                        closeConnection();
-                    }*/
-                    closeConnection();
-                    activeConnection = false;
-                }else{
-                    System.out.println("Connection: " + clientID + " active");
-                }
             }
         }
 
@@ -114,8 +101,8 @@ public class Server {
             System.out.println("Attempting to close connection with client: " + clientID);
             try{
                 clientSocket.close();
-                inputBuffer.close();
-                outputBuffer.close();
+                input.close();
+                output.close();
                 System.out.println("Client connection " + clientID + " closed." );
             }catch (IOException e){
                 System.err.println("Error closing client connection");

@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class MedicineList extends AppCompatActivity {
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +16,10 @@ public class MedicineList extends AppCompatActivity {
         setContentView(R.layout.activity_medicine_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Hello World");
+        connection = Login.getConnection();
+        String test = "test";
+        connection.sendData(test);
+        System.out.println(connection.receiveData());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addMedicineButton);
         fab.setOnClickListener(new View.OnClickListener() {
