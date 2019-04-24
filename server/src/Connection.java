@@ -109,7 +109,7 @@ public class Connection implements Runnable{
             Connection connection = new Connection("localhost", 4044);
             ExecutorService executor = Executors.newCachedThreadPool();
             executor.execute(connection);
-            connection.sendData("test");
+            connection.sendData("testing123");
             System.out.println(connection.receiveData());
         }catch (Exception e){
             System.err.println(e);

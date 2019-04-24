@@ -91,7 +91,7 @@ public class Server {
                 try{
                     String command = (String) input.readObject();
                     System.out.println(command);
-                    output.writeObject(command);
+                    output.writeObject("Yeaeun is a YepoDweigi");
                     output.flush();
                 }catch (Exception e){}
             }
@@ -122,8 +122,6 @@ public class Server {
         try{
             Server testServer = new Server("4044");
             testServer.start();
-
-
         }catch (Exception e){
             System.err.println(e);
         }
