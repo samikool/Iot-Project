@@ -116,11 +116,21 @@ public class MedicineList extends AppCompatActivity {
 
                 serverSender.setData("message");
                 executor.execute(serverSender);
+                System.out.println("message sent");
                 executor.execute(serverRequester);
+
+                try{
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 String response = (String) serverRequester.getData();
+
                 if(response.matches("ready")){
                     serverSender.setData(token);
                     executor.execute(serverSender);
+                    System.out.println("Sent token");
                 }
 
 
