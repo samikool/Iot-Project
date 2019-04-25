@@ -108,9 +108,10 @@ public class Server {
             while (activeConnection){
                 try{
                     String command = (String) input.readObject();
-                    if(command.equals("message")){
+                    if(command == "message"){
                         output.writeObject("ready");
                         String token = (String) input.readObject();
+                        System.out.println(token);
 
                         Message message = Message.builder()
                                 .putData("test", "test")
