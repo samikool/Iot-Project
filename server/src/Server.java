@@ -111,6 +111,7 @@ public class Server {
                     if(command.equals("message")){
 
                         output.writeObject("ready");
+                        System.out.println("sent ready");
                         String token = (String) input.readObject();
                         System.out.println(token);
 

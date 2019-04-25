@@ -5,6 +5,11 @@ import java.util.zip.DataFormatException;
 public class ServerRequester implements Runnable{
     private Connection connection;
     private Object data;
+
+    public boolean hasDataReady() {
+        return dataReady;
+    }
+
     private volatile boolean dataReady;
 
     public ServerRequester(Connection connection){
@@ -13,7 +18,7 @@ public class ServerRequester implements Runnable{
         dataReady = false;
     }
 
-    public Object getData() {
+    public synchronized Object getData() {
         while(!dataReady){
 
         }

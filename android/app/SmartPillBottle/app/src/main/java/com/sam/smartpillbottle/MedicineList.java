@@ -117,6 +117,9 @@ public class MedicineList extends AppCompatActivity {
                 serverSender.setData("message");
                 executor.execute(serverSender);
                 executor.execute(serverRequester);
+                while (!serverRequester.hasDataReady()){
+
+                }
                 if(serverRequester.getData() == "ready"){
                     serverSender.setData(token);
                     executor.execute(serverSender);
