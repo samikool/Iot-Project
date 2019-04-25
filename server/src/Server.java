@@ -111,6 +111,7 @@ public class Server {
                     if(command.equals("message")){
 
                         output.writeObject("ready");
+                        output.flush();
                         System.out.println("sent ready");
                         String token = (String) input.readObject();
                         System.out.println(token);
@@ -126,8 +127,6 @@ public class Server {
 
                     }
                     System.out.println(command);
-                    output.writeObject("Yeaeun is a YepoDweigi");
-                    output.flush();
                 }catch (Exception e){}
             }
         }
