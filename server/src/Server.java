@@ -1,6 +1,8 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -106,6 +108,20 @@ public class Server {
             while (activeConnection){
                 try{
                     String command = (String) input.readObject();
+                    if(command.equals("message")){
+                        output.writeObject("ready");
+                        String token = (String) input.readObject();
+
+                        Message message = Message.builder()
+                                .putData("test", "test")
+                                .putData("test1", "test1")
+                                .setToken(token)
+                                .build();
+
+                        String response = FirebaseMessaging.getInstance().send(message);
+                        System.out.println("Successfully sent message: " + response);
+
+                    }
                     System.out.println(command);
                     output.writeObject("Yeaeun is a YepoDweigi");
                     output.flush();

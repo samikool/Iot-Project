@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -33,7 +35,9 @@ public class Login extends AppCompatActivity {
 
     public static ExecutorService getExecutor(){return executor;}
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference userIDTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,8 @@ public class Login extends AppCompatActivity {
 
         executor = Executors.newCachedThreadPool();
 
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         //establish connection (may not be needed with Firebase)
         try {
@@ -76,7 +81,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        if(mAuth.getCurrentUser() != null){
+        if(firebaseAuth.getCurrentUser() != null){
             showMedicineList();
         }
     }
@@ -87,12 +92,15 @@ public class Login extends AppCompatActivity {
     }
 
     private void register(){
-        mAuth.createUserWithEmailAndPassword(emailBox.getText().toString(), passwordBox.getText().toString())
+        firebaseAuth.createUserWithEmailAndPassword(emailBox.getText().toString(), passwordBox.getText().toString())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Snackbar.make(findViewById(R.id.loginLayout),"Successfully registered account!", Snackbar.LENGTH_LONG).show();
                         login();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        firebaseDatabase.getReference(user.getUid() + "/email").setValue(user.getEmail());
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -103,7 +111,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void login(){
-        mAuth.signInWithEmailAndPassword(emailBox.getText().toString(), passwordBox.getText().toString())
+        firebaseAuth.signInWithEmailAndPassword(emailBox.getText().toString(), passwordBox.getText().toString())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
