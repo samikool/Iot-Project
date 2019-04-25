@@ -3,3 +3,6 @@
 
 #Compiled Class files
 *.class
+
+#Google Key
+server/src/*.json

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1052427675877",
+    "firebase_url": "https://iot-project-f9452.firebaseio.com",
+    "project_id": "iot-project-f9452",
+    "storage_bucket": "iot-project-f9452.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052427675877:android:754dea876fc7ac6b",
+        "android_client_info": {
+          "package_name": "com.sam.smartpillbottle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052427675877-6qt4o3eaub8fsqs0se0olr17klcua7a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGVXAOuAyyrgCj2DQEvCkg6HK3Hj7VfXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052427675877-6qt4o3eaub8fsqs0se0olr17klcua7a9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

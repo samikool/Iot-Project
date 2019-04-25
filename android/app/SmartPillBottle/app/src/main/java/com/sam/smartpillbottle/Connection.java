@@ -34,7 +34,6 @@ public class Connection implements Runnable {
     public void connect() {
         try{
             this.socket = new Socket(InetAddress.getByName(ip),port);
-            System.out.println(socket.isConnected());
         }catch (Exception e){
             e.printStackTrace();
             System.err.println(e);
@@ -49,8 +48,6 @@ public class Connection implements Runnable {
 
             //get input buffer initialized
             input = new ObjectInputStream(socket.getInputStream());
-
-            System.out.println("Buffers successfully initialized");
         }catch (IOException e){
             System.err.println("Error initializing buffers...");
             System.err.println(e);
@@ -60,11 +57,7 @@ public class Connection implements Runnable {
     public void processConnection(){
         connected = true;
         while(!done){
-            try{
-                wait();
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
+
 
         }
     }

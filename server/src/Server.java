@@ -1,3 +1,8 @@
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,6 +37,17 @@ public class Server {
 
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,100);
+
+        FileInputStream serviceAccount =
+                new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\src\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setDatabaseUrl("https://iot-project-f9452.firebaseio.com")
+                .build();
+
+        FirebaseApp.initializeApp(options);
+
 
         while(true){
             try{
@@ -125,9 +141,6 @@ public class Server {
         }catch (Exception e){
             System.err.println(e);
         }
-
-
-
     }
 }
 

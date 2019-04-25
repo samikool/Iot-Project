@@ -15,11 +15,7 @@ public class ServerRequester implements Runnable{
 
     public Object getData() {
         while(!dataReady){
-            try{
-                wait();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+
         }
         dataReady = false;
         return data;
