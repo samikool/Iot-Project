@@ -39,7 +39,7 @@ public class Server {
         serverSocket = new ServerSocket(port,100);
 
         FileInputStream serviceAccount =
-                new FileInputStream("~/IoT-Project/Server/src/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+                new FileInputStream("~/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
