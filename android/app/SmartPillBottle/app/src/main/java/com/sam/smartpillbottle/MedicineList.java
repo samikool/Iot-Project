@@ -119,10 +119,16 @@ public class MedicineList extends AppCompatActivity {
                 executor.execute(serverRequester);
                 String response = (String) serverRequester.getData();
                 if(response.matches("ready")){
+                    String uid = user.getUid();
+                    String uid1 = user.getUid().substring(0, user.getUid().length()/2);
+                    String uid2 = user.getUid().substring(uid1.length(), user.getUid().length());
                     serverSender.setData(user.getUid());
                     executor.execute(serverSender);
 
-                    serverSender.setData(token);
+
+                    serverSender.setData(token.substring(0, token.length()/2));
+                    executor.execute(serverSender);
+                    serverSender.setData(token.substring(token.length()/2+1));
                     executor.execute(serverSender);
                 }
 

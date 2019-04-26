@@ -116,7 +116,9 @@ public class Server {
                         String userID = (String) input.readObject();
                         System.out.println(userID);
                         String token = (String) input.readObject();
-                        System.out.println(token);
+                        System.out.println("Token part 1: " + token);
+                        token += (String) input.readObject();
+                        System.out.println("Token part full: " + token);
 
                         Message message = Message.builder()
                                 .putData("title", "UserID: " + userID)
