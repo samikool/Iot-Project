@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference userIDTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

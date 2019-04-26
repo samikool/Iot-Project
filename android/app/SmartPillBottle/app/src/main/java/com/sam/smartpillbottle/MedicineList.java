@@ -107,7 +107,7 @@ public class MedicineList extends AppCompatActivity {
                 String test = "testing123";
                 serverSender.setData(test);
                 executor.execute(serverSender);
-                executor.execute(serverRequester);
+                //executor.execute(serverRequester);
 
 
 
@@ -131,8 +131,7 @@ public class MedicineList extends AppCompatActivity {
                 //NotificationCompat.Builder builder = new NotificationCompat.Builder(this, )
 
 
-                Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }

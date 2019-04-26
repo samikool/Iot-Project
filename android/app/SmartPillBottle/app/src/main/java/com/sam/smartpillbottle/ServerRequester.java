@@ -18,7 +18,7 @@ public class ServerRequester implements Runnable{
         dataReady = false;
     }
 
-    public synchronized Object getData() {
+    public Object getData() {
         while(!dataReady){
 
         }
