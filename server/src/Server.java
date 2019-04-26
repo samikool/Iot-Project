@@ -3,7 +3,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,7 +18,7 @@ public class Server {
     private ConnectionHandler[] connectionHandlers;
     private ExecutorService executor;
     private int clientsConnected;
-
+    private FirebaseConnection firebaseConnection;
 
     //main constructor actually used
     //TODO: error checking
@@ -28,7 +27,6 @@ public class Server {
         this.executor = Executors.newCachedThreadPool();
         this.clientsConnected = 0;
         this.port = port;
-
     }
 
     //constructor to catch strings as input for port
@@ -40,8 +38,8 @@ public class Server {
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,100);
 
-        FileInputStream serviceAccount =
-                new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -49,7 +47,9 @@ public class Server {
                 .build();
 
         FirebaseApp.initializeApp(options);
+        this.firebaseConnection = new FirebaseConnection();
 
+        System.out.println(firebaseConnection.getData("7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
 
         while(true){
             try{
@@ -74,6 +74,7 @@ public class Server {
         private ObjectInputStream input;
         private ObjectOutputStream output;
         private boolean activeConnection;
+
 
         public ConnectionHandler(int id){
             clientID = id;
@@ -111,14 +112,17 @@ public class Server {
                     if(command.equals("message")){
 
                         output.writeObject("ready");
-                        //output.flush();
-                        System.out.println("sent ready");
+                        output.flush();
+                        //System.out.println("sent ready");
+                        String userID = (String) input.readObject();
                         String token = (String) input.readObject();
-                        System.out.println(token);
+                        //System.out.println(token);
+
+
 
                         Message message = Message.builder()
-                                .putData("test", "test")
-                                .putData("test1", "test1")
+                                .putData("title", "title")
+                                .putData("content", "content")
                                 .setToken(token)
                                 .build();
 

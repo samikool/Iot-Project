@@ -108,7 +108,7 @@ public class Connection implements Runnable {
 
     public static void main(String[] args){
         try{
-            Connection connection = new Connection("68.183.148.234", 4044);
+            Connection connection = new Connection("192.168.0.20", 4044);
             connection.connect();
             connection.initializeStreams();
             connection.closeConnection();

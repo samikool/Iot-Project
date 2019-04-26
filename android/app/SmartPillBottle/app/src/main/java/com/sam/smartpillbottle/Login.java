@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference userIDTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class Login extends AppCompatActivity {
 
         //establish connection (may not be needed with Firebase)
         try {
-            connection = new Connection("68.183.148.234", 4044);
+            connection = new Connection("192.168.0.20", 4044);
             executor.execute(connection);
             serverRequester = new ServerRequester(connection);
             serverSender = new ServerSender(connection);

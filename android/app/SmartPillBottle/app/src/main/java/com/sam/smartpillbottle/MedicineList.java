@@ -107,7 +107,7 @@ public class MedicineList extends AppCompatActivity {
                 String test = "testing123";
                 serverSender.setData(test);
                 executor.execute(serverSender);
-                executor.execute(serverRequester);
+                //executor.execute(serverRequester);
 
 
 
@@ -116,21 +116,18 @@ public class MedicineList extends AppCompatActivity {
 
                 serverSender.setData("message");
                 executor.execute(serverSender);
-                System.out.println("message sent");
+                //System.out.println("message sent");
                 executor.execute(serverRequester);
-
-                try{
-                    Thread.sleep(1000);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
 
                 String response = (String) serverRequester.getData();
 
                 if(response.matches("ready")){
+                    serverSender.setData(user.getUid());
+                    executor.execute(serverSender);
+
                     serverSender.setData(token);
                     executor.execute(serverSender);
-                    System.out.println("Sent token");
+                    System.out.println("Done sending data");
                 }
 
 
@@ -141,8 +138,7 @@ public class MedicineList extends AppCompatActivity {
                 //NotificationCompat.Builder builder = new NotificationCompat.Builder(this, )
 
 
-                Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
