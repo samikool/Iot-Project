@@ -112,12 +112,11 @@ public class Server {
 
                         output.writeObject("ready");
                         output.flush();
-                        //System.out.println("sent ready");
+                        System.out.println("sent ready");
                         String userID = (String) input.readObject();
+                        System.out.println(userID);
                         String token = (String) input.readObject();
-                        //System.out.println(token);
-
-
+                        System.out.println(token);
 
                         Message message = Message.builder()
                                 .putData("title", userID)

@@ -24,15 +24,16 @@ public class Messanger extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
         Intent intent = new Intent(this, MedicineList.class);
+
+        Map data = remoteMessage.getData();
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setContentTitle("title")
-                .setContentText("body")
+                .setContentTitle((String) data.get("title"))
+                .setContentText((String) data.get("content"))
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
