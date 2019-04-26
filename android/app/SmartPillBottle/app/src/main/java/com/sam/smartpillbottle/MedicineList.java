@@ -105,7 +105,7 @@ public class MedicineList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String test = "testing123";
-                serverSender.setData(test);
+                serverSender.addData(test);
                 executor.execute(serverSender);
                 //executor.execute(serverRequester);
 
@@ -114,18 +114,16 @@ public class MedicineList extends AppCompatActivity {
                 test1.setText("Benadryl");
                 test2.setText("Tylenol");
 
-                serverSender.setData("message");
+                serverSender.addData("message");
                 executor.execute(serverSender);
                 executor.execute(serverRequester);
                 String response = (String) serverRequester.getData();
                 if(response.matches("ready")){
-                    serverSender.setData(user.getUid());
-                    executor.execute(serverSender);
-                    System.out.println("sent userID");
-                    serverSender.setData(token.substring(0, token.length()/2));
-                    executor.execute(serverSender);
-                    System.out.println("sent token part 1");
-                    serverSender.setData(token.substring(token.length()/2+1));
+                    serverSender.addData(user.getUid());
+                    //System.out.println("added");
+                    serverSender.addData(token.substring(0, token.length()/2));
+                    //System.out.println("added");
+                    serverSender.addData(token.substring(token.length()/2));
                     executor.execute(serverSender);
                 }
 
