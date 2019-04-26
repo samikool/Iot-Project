@@ -40,6 +40,7 @@ public class Server {
 
         FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -120,15 +121,18 @@ public class Server {
                         token += (String) input.readObject();
                         System.out.println("Token part full: " + token);
 
-                        Message message = Message.builder()
-                                .putData("title", "UserID: " + userID)
-                                .putData("content", "Token: " + token)
-                                .setToken(token)
-                                .build();
+                        try{
+                            Message message = Message.builder()
+                                    .putData("title", "UserID: " + userID)
+                                    .putData("content", "Token: " + token)
+                                    .setToken(token)
+                                    .build();
 
-                        String response = FirebaseMessaging.getInstance().send(message);
-                        System.out.println("Successfully sent message: " + response);
-
+                            String response = FirebaseMessaging.getInstance().send(message);
+                            System.out.println("Successfully sent message: " + response);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                     System.out.println(command);
                 }catch (Exception e){}

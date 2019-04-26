@@ -32,6 +32,7 @@ public class ServerSender implements Runnable{
     public void run() {
         if(dataReady && data != null){
             connection.sendData(data);
+            dataReady = false;
         }
     }
 }
