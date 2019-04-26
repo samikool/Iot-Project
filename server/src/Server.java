@@ -119,8 +119,8 @@ public class Server {
                         System.out.println(token);
 
                         Message message = Message.builder()
-                                .putData("title", userID)
-                                .putData("content", token)
+                                .putData("title", "UserID: " + userID)
+                                .putData("content", "Token: " + token)
                                 .setToken(token)
                                 .build();
 
