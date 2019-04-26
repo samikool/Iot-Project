@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AddMedicine"></activity>
         <activity
             android:name=".MedicineListTest"
-            android:label="@string/title_activity_medicine_list_test"></activity>
+            android:label="@string/title_activity_medicine_list_test" />
         <activity
             android:name=".MedicineListTestListActivity"
             android:label="@string/title_medicinelisttest_list"
@@ -70,7 +71,5 @@
             </intent-filter>
         </service>
     </application>
-
-
 
 </manifest>

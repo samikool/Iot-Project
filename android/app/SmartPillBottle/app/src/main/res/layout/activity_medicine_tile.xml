@@ -7,7 +7,7 @@
     android:onClick="@string/title_activity_medicine_list">
 
     <TextView
-        android:id="@+id/medicineNameLabel"
+        android:id="@+id/listMedicineNameLabel"
         android:layout_width="203dp"
         android:layout_height="36dp"
         android:layout_marginStart="4dp"
