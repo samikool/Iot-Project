@@ -119,6 +119,9 @@ public class MedicineList extends AppCompatActivity {
                 executor.execute(serverRequester);
                 String response = (String) serverRequester.getData();
                 if(response.matches("ready")){
+                    serverSender.setData(user.getUid());
+                    executor.execute(serverSender);
+
                     serverSender.setData(token);
                     executor.execute(serverSender);
                 }

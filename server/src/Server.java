@@ -120,8 +120,8 @@ public class Server {
 
 
                         Message message = Message.builder()
-                                .putData("title", "title")
-                                .putData("content", "content")
+                                .putData("title", userID)
+                                .putData("content", token)
                                 .setToken(token)
                                 .build();
 
