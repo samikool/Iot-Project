@@ -22,12 +22,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dosageLabel"
-        android:layout_width="138dp"
-        android:layout_height="27dp"
+        android:id="@+id/tileNextDosageLabel"
+        android:layout_width="162dp"
+        android:layout_height="31dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="40dp"
-        android:text="Dosage: 2 Pills"
+        android:layout_marginTop="44dp"
+        android:text="Next Dose: 10/15/18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,9 +35,9 @@
         android:id="@+id/remainingPillsLabel"
         android:layout_width="139dp"
         android:layout_height="27dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:text="Remaining Pills: 10"
-        app:layout_constraintStart_toEndOf="@+id/dosageLabel"
+        app:layout_constraintStart_toEndOf="@+id/tileNextDosageLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
 

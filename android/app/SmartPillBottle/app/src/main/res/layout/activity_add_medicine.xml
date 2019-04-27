@@ -7,6 +7,48 @@
     android:layout_height="match_parent"
     tools:context=".AddMedicine">
 
+    <EditText
+        android:id="@+id/addPillPerDoseBox"
+        android:layout_width="82dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.792"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addPillsPerDoseLabel" />
+
+    <EditText
+        android:id="@+id/addNumOfPillsBox"
+        android:layout_width="82dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNumOfPillsLabel" />
+
+    <TextView
+        android:id="@+id/addNumOfPillsLabel"
+        android:layout_width="240dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Current Number of  Pills: "
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addSundayCheckBox" />
+
     <TextView
         android:id="@+id/addMedicineNameLabel"
         android:layout_width="143dp"
@@ -51,13 +93,22 @@
         android:id="@+id/addDosesPerDayLabel"
         android:layout_width="143dp"
         android:layout_height="23dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
         android:text="Doses Per Day:"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMedicineNameBox" />
+
+    <TextView
+        android:id="@+id/addPillsPerDoseLabel"
+        android:layout_width="143dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:text="Pills Per Dose:"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addMedicineNameBox" />
 
     <EditText
@@ -74,15 +125,18 @@
         app:layout_constraintTop_toBottomOf="@+id/addMedicineNameLabel" />
 
     <EditText
-        android:id="@+id/addDosagePerDayBox"
+        android:id="@+id/addDosesPerDayBox"
         android:layout_width="82dp"
         android:layout_height="41dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addDosesPerDayLabel" />
 
     <CheckBox
@@ -109,7 +163,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDosagePerDayBox" />
+        app:layout_constraintTop_toBottomOf="@+id/addDosesPerDayBox" />
 
     <CheckBox
         android:id="@+id/addTuesdayCheckBox"
@@ -206,15 +260,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="50dp"
         android:text="Add Medicine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addSundayCheckBox"
-        app:layout_constraintVertical_bias="0.277" />
+        app:layout_constraintTop_toBottomOf="@+id/addNumOfPillsBox"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

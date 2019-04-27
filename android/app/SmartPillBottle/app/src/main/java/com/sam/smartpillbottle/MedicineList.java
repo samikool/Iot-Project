@@ -29,8 +29,8 @@ public class MedicineList extends AppCompatActivity {
     private LinearLayout medicineListContainer;
     private TextView test1;
     private TextView test2;
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private TextView emailLabel;
     private String token;
 
@@ -81,8 +81,6 @@ public class MedicineList extends AppCompatActivity {
             }
         });
 
-
-
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +94,6 @@ public class MedicineList extends AppCompatActivity {
                 startActivity(new Intent(MedicineList.this, MedicineDetail.class));
             }
         });
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addMedicineButton);
         fab.setOnClickListener(new View.OnClickListener() {

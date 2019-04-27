@@ -51,7 +51,7 @@ public class Server {
         FirebaseApp.initializeApp(options);
         this.firebaseConnection = new FirebaseConnection();
 
-        System.out.println(firebaseConnection.getData("7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
+        //System.out.println(firebaseConnection.getData("7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
 
         while(true){
             try{
