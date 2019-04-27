@@ -64,8 +64,8 @@ public class MedicineList extends AppCompatActivity {
         medicineListContainer.addView(view);
         medicineListContainer.addView(view1);
 
-        test1 = view.findViewById(R.id.tileeMedicineNameLabel);
-        test2 = view1.findViewById(R.id.tileeMedicineNameLabel);
+        test1 = view.findViewById(R.id.tileMedicineNameLabel);
+        test2 = view1.findViewById(R.id.tileMedicineNameLabel);
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {

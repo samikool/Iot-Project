@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/addMedicineUIDLabel" />
 
     <TextView
-        android:id="@+id/addDosagePerDayLabel"
+        android:id="@+id/addDosesPerDayLabel"
         android:layout_width="143dp"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/addMedicineNameLabel" />
 
     <EditText
-        android:id="@+id/addDosageMondayBox"
+        android:id="@+id/addDosagePerDayBox"
         android:layout_width="82dp"
         android:layout_height="41dp"
         android:layout_marginTop="20dp"
@@ -83,7 +83,7 @@
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDosagePerDayLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/addDosesPerDayLabel" />
 
     <CheckBox
         android:id="@+id/addMondayCheckBox"
@@ -107,14 +107,14 @@
         android:layout_marginEnd="8dp"
         android:text="Doses Taken On: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDosageMondayBox" />
+        app:layout_constraintTop_toBottomOf="@+id/addDosagePerDayBox" />
 
     <CheckBox
         android:id="@+id/addTuesdayCheckBox"
-        android:layout_width="86dp"
-        android:layout_height="29dp"
+        android:layout_width="102dp"
+        android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
@@ -138,8 +138,8 @@
 
     <CheckBox
         android:id="@+id/addThursdayCheckBox"
-        android:layout_width="94dp"
-        android:layout_height="30dp"
+        android:layout_width="104dp"
+        android:layout_height="31dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
@@ -200,5 +200,21 @@
         app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addDayTakenLabel" />
+
+    <Button
+        android:id="@+id/addAddMedicineButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="50dp"
+        android:text="Add Medicine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addSundayCheckBox"
+        app:layout_constraintVertical_bias="0.277" />
 
 </android.support.constraint.ConstraintLayout>
