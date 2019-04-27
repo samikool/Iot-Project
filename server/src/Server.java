@@ -39,9 +39,9 @@ public class Server {
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,100);
 
-        FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
-        //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -49,9 +49,10 @@ public class Server {
                 .build();
 
         FirebaseApp.initializeApp(options);
+
         this.firebaseConnection = new FirebaseConnection();
 
-        //System.out.println(firebaseConnection.getData("7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
+        System.out.println(firebaseConnection.getData("users/7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
 
         while(true){
             try{
