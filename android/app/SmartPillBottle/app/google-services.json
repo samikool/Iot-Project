@@ -15,13 +15,29 @@
       },
       "oauth_client": [
         {
+          "client_id": "1052427675877-be4v0k23tur624q27nddop8uj67jvsmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sam.smartpillbottle",
+            "certificate_hash": "f96c0294853ef165eecbb880890c3bee802612a9"
+          }
+        },
+        {
+          "client_id": "1052427675877-ff5bfkq892e8uon74hv4l6bieun932gn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sam.smartpillbottle",
+            "certificate_hash": "f180694eb767795b20d6fbc1bfde3bf1a1849836"
+          }
+        },
+        {
           "client_id": "1052427675877-6qt4o3eaub8fsqs0se0olr17klcua7a9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBGVXAOuAyyrgCj2DQEvCkg6HK3Hj7VfXc"
+          "current_key": "AIzaSyDYhnAysh_h8zaA6WLe8bgRTSKL34jhErQ"
         }
       ],
       "services": {
