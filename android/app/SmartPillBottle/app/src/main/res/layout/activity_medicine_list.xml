@@ -30,8 +30,8 @@
 
                 <TextView
                     android:id="@+id/listEmailLabel"
-                    android:layout_width="295dp"
-                    android:layout_height="32dp"
+                    android:layout_width="264dp"
+                    android:layout_height="33dp"
                     android:layout_marginStart="8dp"
                     android:text="@string/invalid_username"
                     android:textColor="#FCF8F8"
@@ -44,12 +44,15 @@
 
                 <TextView
                     android:id="@+id/textView4"
-                    android:layout_width="105dp"
-                    android:layout_height="32dp"
+                    android:layout_width="123dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="8dp"
                     android:text="Current User:"
                     android:textColor="#FCF8F8"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/listEmailLabel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />

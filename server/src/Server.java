@@ -19,6 +19,7 @@ public class Server {
     private ExecutorService executor;
     private int clientsConnected;
     private FirebaseConnection firebaseConnection;
+    private NotificationSender notificationSender;
 
     //main constructor actually used
     //TODO: error checking

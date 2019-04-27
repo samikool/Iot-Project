@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -65,8 +64,8 @@ public class MedicineList extends AppCompatActivity {
         medicineListContainer.addView(view);
         medicineListContainer.addView(view1);
 
-        test1 = view.findViewById(R.id.listMedicineNameLabel);
-        test2 = view1.findViewById(R.id.listMedicineNameLabel);
+        test1 = view.findViewById(R.id.tileeMedicineNameLabel);
+        test2 = view1.findViewById(R.id.tileeMedicineNameLabel);
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -126,6 +125,8 @@ public class MedicineList extends AppCompatActivity {
                     serverSender.addData(token.substring(token.length()/2));
                     executor.execute(serverSender);
                 }
+
+                startActivity(new Intent(MedicineList.this, AddMedicine.class ));
 
 
                 //serverSender.setData("notification");

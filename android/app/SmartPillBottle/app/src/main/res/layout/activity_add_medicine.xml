@@ -2,12 +2,26 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addMedicineLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddMedicine">
 
     <TextView
-        android:id="@+id/medicineUIDLabel"
+        android:id="@+id/addMedicineNameLabel"
+        android:layout_width="143dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Medicine Name"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMedicineUIDBox" />
+
+    <TextView
+        android:id="@+id/addMedicineUIDLabel"
         android:layout_width="192dp"
         android:layout_height="23dp"
         android:layout_marginStart="32dp"
@@ -21,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/medicineUIDBox"
+        android:id="@+id/addMedicineUIDBox"
         android:layout_width="346dp"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
@@ -31,17 +45,95 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medicineUIDLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/addMedicineUIDLabel" />
 
     <TextView
-        android:id="@+id/listMedicineNameLabel"
+        android:id="@+id/addDosagePerDayLabel"
         android:layout_width="143dp"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="Doses Per Day:"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medicineUIDBox" />
+        app:layout_constraintTop_toBottomOf="@+id/addMedicineNameBox" />
+
+    <EditText
+        android:id="@+id/addMedicineNameBox"
+        android:layout_width="344dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMedicineNameLabel" />
+
+    <EditText
+        android:id="@+id/addDosageMondayBox"
+        android:layout_width="82dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="164dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDosagePerDayLabel" />
+
+    <CheckBox
+        android:id="@+id/addMondayCheckBox"
+        android:layout_width="91dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Monday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDayTakenLabel" />
+
+    <TextView
+        android:id="@+id/addDayTakenLabel"
+        android:layout_width="124dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Doses Taken On: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDosageMondayBox" />
+
+    <CheckBox
+        android:id="@+id/addTuesdayCheckBox"
+        android:layout_width="86dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Tuesday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDayTakenLabel" />
+
+    <CheckBox
+        android:id="@+id/addWednesdayCheckBox"
+        android:layout_width="116dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
+        android:text="Wednesday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/addTuesdayCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/addDayTakenLabel" />
+
 </android.support.constraint.ConstraintLayout>
