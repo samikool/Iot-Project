@@ -1,8 +1,11 @@
 package com.sam.smartpillbottle;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +19,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -41,6 +43,8 @@ public class AddMedicine extends AppCompatActivity {
     private CheckBox[] dayBoxes;
     private TextView currentPillsBox;
     private Button addMedicineButton;
+    private Medication medication;
+    private boolean canAddMedicine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,9 @@ public class AddMedicine extends AppCompatActivity {
         everydayCheckbox = findViewById(R.id.addEverydayCheckBox);
         currentPillsBox = findViewById(R.id.addNumOfPillsBox);
         addMedicineButton = findViewById(R.id.addAddMedicineButton);
+
+        canAddMedicine = false;
+
 
         addMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,19 +118,60 @@ public class AddMedicine extends AppCompatActivity {
                         Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
                 //create medication
-                Medication medication = new Medication(MedicineList.getNextMedicationLocalID(), medicineUID, medicineName,
+                medication = new Medication(MedicineList.getNextMedicationLocalID(), medicineUID, medicineName,
                         pillsPerDose, dosesPerDay, remainingPills, "0", "0", today, today);
 
-                //write to database
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/name").setValue(medicineName);
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/dosesPerDay").setValue(dosesPerDay);
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/pillsPerDose").setValue(pillsPerDose);
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/remaining").setValue(medicineName);
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/latitude").setValue("0");
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/longitude").setValue("0");
-                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/days").setValue(days);
+                firebaseDatabase.child("/claimed/").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if((boolean) dataSnapshot.child(medication.getMedicineUID()).getValue()){
+                            canAddMedicine = false;
+                        }else{
+                            canAddMedicine = true;
+                        }
+                    }
 
-                finish();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                try{
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+
+
+                //write to database
+                if(canAddMedicine){
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/name").setValue(medicineName);
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/dosesPerDay").setValue(dosesPerDay);
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/pillsPerDose").setValue(pillsPerDose);
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/remaining").setValue(medicineName);
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/latitude").setValue("0");
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/longitude").setValue("0");
+                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/days").setValue(days);
+                    Snackbar.make(findViewById(R.id.medicineListContainer), "Success: Medicine added", Snackbar.LENGTH_LONG);
+                    finish();
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddMedicine.this)
+                            .setMessage("Failed: Medicine UID already registered\n Please try again.")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    System.exit(0);
+                                }
+                            });
+                    builder.show();
+                }
             }
         });
 

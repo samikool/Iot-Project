@@ -40,8 +40,11 @@ public class Server {
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,100);
 
+        //linux server
         FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //computer at home
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //laptop
         //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
@@ -91,13 +94,12 @@ public class Server {
 
         public void initializeBuffers(){
             try{
-                //get output buffer initialized
-                output = new ObjectOutputStream(clientSocket.getOutputStream());
-                output.flush();
-
                 //get input buffer initialized
                 input = new ObjectInputStream(clientSocket.getInputStream());
 
+                //get output buffer initialized
+                output = new ObjectOutputStream(clientSocket.getOutputStream());
+                output.flush();
                 System.out.println("Buffers successfully initialized");
             }catch (IOException e){
                 System.err.println("Error initializing buffers...");
