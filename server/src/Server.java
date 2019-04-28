@@ -206,11 +206,15 @@ public class Server {
                             }
                         }
                         else if(type.equals("bottle")){
+                            System.out.println("bottle detected");
                             String combinedData = input.readLine();
                             System.out.println(combinedData);
                             String[] data = combinedData.split(",");
                             System.out.println(data);
                             closeConnection();
+                        }
+                        else{
+                            System.err.println("Problem finding type");
                         }
                     System.out.println(type);
                 }catch (Exception e){
