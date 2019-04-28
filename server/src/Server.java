@@ -104,6 +104,7 @@ public class Server {
             }catch (IOException e){
                 System.err.println("Error initializing buffers...");
                 System.err.println(e);
+                e.printStackTrace();
                 activeConnection = false;
             }
 
