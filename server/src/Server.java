@@ -218,7 +218,9 @@ public class Server {
                             }
                             else if(input.readLine().equals("open")){
                                 String combinedData = input.readLine();
+                                System.out.println(combinedData);
                                 String data[] = combinedData.split(",");
+                                System.out.println(data);
                                 //deal with database
                             }
                             closeConnection();
