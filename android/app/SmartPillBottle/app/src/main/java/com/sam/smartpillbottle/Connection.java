@@ -81,7 +81,7 @@ public class Connection implements Runnable {
 
     public void sendData(String data){
         try{
-            output.write(data);
+            output.write(data+"\n");
             output.flush();
         }catch (Exception e){
             e.printStackTrace();

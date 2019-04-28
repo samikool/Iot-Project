@@ -201,6 +201,9 @@ public class Server {
 
                                 String response = FirebaseMessaging.getInstance().send(message);
                                 System.out.println("Successfully sent message: " + response);
+                                System.out.println("closing connection with client: " + clientID);
+                                closeConnection();
+                                activeConnection=false;
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
