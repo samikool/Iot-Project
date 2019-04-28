@@ -130,9 +130,9 @@ public class Server {
                             String userID = input.readLine();
                             System.out.println(userID);
                             token = input.readLine();
-                            System.out.println("Token Part1: ");
+                            System.out.println("Token Part1: " + token);
                             token += input.readLine();
-                            System.out.println("Token Full: ");
+                            System.out.println("Token Full: " + token);
 
                             try{
 
