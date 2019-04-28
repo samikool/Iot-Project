@@ -77,6 +77,7 @@ public class Server {
         private boolean activeConnection;
         private String token;
         private String tokenCount;
+        private boolean newToken;
 
         public ConnectionHandler(int id){
             clientID = id;
@@ -133,11 +134,37 @@ public class Server {
 
                                         }
                                     });
+
                                 Thread.sleep(100);
 
-                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
-                                String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
-                                firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(Integer.valueOf(newCount), null);
+                                firebaseDatabase.child("/users/" + userID + "tokens/" + tokenCount)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if(dataSnapshot.hasChildren()){
+                                                    newToken = true;
+                                                }
+                                                else{
+                                                    newToken = false;
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                Thread.sleep(100);
+
+
+                                if(newToken){
+                                    firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
+                                    String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
+                                    firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(Integer.valueOf(newCount), null);
+                                    newToken = false;
+                                }
+
+
 
 
 
