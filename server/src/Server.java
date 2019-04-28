@@ -152,6 +152,10 @@ public class Server {
                                                         newToken = true;
                                                     }
                                                 }
+                                                if(intTokenCount == 0){
+                                                    newToken = true;
+                                                }
+
                                             }
 
                                             @Override
