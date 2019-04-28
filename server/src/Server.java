@@ -1,6 +1,7 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.*;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import java.io.FileInputStream;
@@ -18,7 +19,7 @@ public class Server {
     private ConnectionHandler[] connectionHandlers;
     private ExecutorService executor;
     private int clientsConnected;
-    private FirebaseConnection firebaseConnection;
+    private DatabaseReference firebaseDatabase;
     private NotificationSender notificationSender;
 
     //main constructor actually used
@@ -49,10 +50,7 @@ public class Server {
                 .build();
 
         FirebaseApp.initializeApp(options);
-
-        this.firebaseConnection = new FirebaseConnection();
-
-        System.out.println(firebaseConnection.getData("users/7U5eX3BaxhbEMy7hXrlVFAI2ZaC3", "email"));
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         while(true){
             try{
@@ -77,6 +75,7 @@ public class Server {
         private ObjectInputStream input;
         private ObjectOutputStream output;
         private boolean activeConnection;
+        private String token;
 
         public ConnectionHandler(int id){
             clientID = id;
@@ -114,10 +113,27 @@ public class Server {
                         if(type.matches("client")){
                             String userID = (String) input.readObject();
                             System.out.println(userID);
-                            String token = (String) input.readObject();
+                            token = (String) input.readObject();
                             System.out.println("Token Part1: ");
                             token += (String) input.readObject();
                             System.out.println("Token Full: ");
+
+                            firebaseDatabase.child("/users/" + userID + "/tokens/count")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            int tokenCount = Integer.parseInt((String) dataSnapshot.getValue());
+                                            firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
+                                            firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(++tokenCount, null);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
 
                             try{
                                 Message message = Message.builder()
