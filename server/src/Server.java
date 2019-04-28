@@ -112,13 +112,12 @@ public class Server {
             try{
                 output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 output.flush();
+
                 input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 System.out.println("Buffers successfully setup");
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-
         }
 
         public void processConnection(){
@@ -126,7 +125,8 @@ public class Server {
             while (activeConnection){
                 try{
                     String type = input.readLine(); //these were all changed from readObject (String) to this
-                        if(type.matches("client")){
+                    System.out.println(type);
+                        if(type.equals("client")){
                             String userID = input.readLine();
                             System.out.println(userID);
                             token = input.readLine();
@@ -205,14 +205,13 @@ public class Server {
                                 e.printStackTrace();
                             }
                         }
-                        else if(type.matches("bottle")){
+                        else if(type.equals("bottle")){
                             String combinedData = input.readLine();
                             System.out.println(combinedData);
                             String[] data = combinedData.split(",");
                             System.out.println(data);
                             closeConnection();
                         }
-
                     System.out.println(type);
                 }catch (Exception e){
                     e.printStackTrace();
