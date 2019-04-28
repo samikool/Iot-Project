@@ -113,10 +113,7 @@ public class Server {
                 output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 output.flush();
                 input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                System.out.println("Buffers success");
-                System.out.println(input.readLine());
-                output.write("hello to you");
-                output.flush();
+                System.out.println("Buffers successfully setup");
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -127,14 +124,14 @@ public class Server {
         public void processConnection(){
             int secondsActive = 0;
             while (activeConnection){
-                /*try{
-                    String type = (String) input.readObject();
+                try{
+                    String type = input.readLine(); //these were all changed from readObject (String) to this
                         if(type.matches("client")){
-                            String userID = (String) input.readObject();
+                            String userID = input.readLine();
                             System.out.println(userID);
-                            token = (String) input.readObject();
+                            token = input.readLine();
                             System.out.println("Token Part1: ");
-                            token += (String) input.readObject();
+                            token += input.readLine();
                             System.out.println("Token Full: ");
 
                             try{
@@ -209,13 +206,17 @@ public class Server {
                             }
                         }
                         else if(type.matches("bottle")){
-
+                            String combinedData = input.readLine();
+                            System.out.println(combinedData);
+                            String[] data = combinedData.split(",");
+                            System.out.println(data);
+                            closeConnection();
                         }
 
                     System.out.println(type);
                 }catch (Exception e){
                     e.printStackTrace();
-                }*/
+                }
             }
         }
 
