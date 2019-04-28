@@ -76,6 +76,7 @@ public class Server {
         private ObjectOutputStream output;
         private boolean activeConnection;
         private String token;
+        private String tokenCount;
 
         public ConnectionHandler(int id){
             clientID = id;
@@ -120,24 +121,25 @@ public class Server {
 
                             try{
 
-                                    firebaseDatabase.child("/users/" + userID + "/tokens/count")
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                String tokenCount = (String) dataSnapshot.getValue();
-                                                System.out.println("Token count: " + tokenCount);
-                                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
-                                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue("sam", null);
-                                                int newCount = Integer.parseInt(tokenCount) + 1;
-                                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
-                                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(String.valueOf(newCount), null);
-                                            }
+                                firebaseDatabase.child("/users/" + userID + "/tokens/count")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            tokenCount = (String) dataSnapshot.getValue();
+                                        }
 
                                         @Override
                                         public void onCancelled(DatabaseError databaseError) {
 
                                         }
                                     });
+
+                                System.out.println("Token count: " + tokenCount);
+                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
+                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue("sam", null);
+                                int newCount = Integer.parseInt(tokenCount) + 1;
+                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
+                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(String.valueOf(newCount), null);
 
 
 
