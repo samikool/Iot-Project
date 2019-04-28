@@ -143,7 +143,7 @@ public class Server {
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 int intTokenCount = Integer.parseInt(tokenCount);
                                                 for(int i=0; i<intTokenCount; i++){
-                                                    if(dataSnapshot.child(String.valueOf(i)).hasChild(token)){
+                                                    if(dataSnapshot.child(String.valueOf(i)).child(token).exists()){
                                                         newToken = false;
                                                         break;
                                                     }
