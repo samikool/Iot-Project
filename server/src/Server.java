@@ -113,8 +113,11 @@ public class Server {
                     String type = (String) input.readObject();
                         if(type.matches("client")){
                             String userID = (String) input.readObject();
+                            System.out.println(userID);
                             String token = (String) input.readObject();
+                            System.out.println("Token Part1: ");
                             token += (String) input.readObject();
+                            System.out.println("Token Full: ");
 
                             try{
                                 Message message = Message.builder()
