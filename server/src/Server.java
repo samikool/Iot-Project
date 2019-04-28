@@ -217,6 +217,12 @@ public class Server {
                     e.printStackTrace();
                 }
             }
+            try{
+                Thread.sleep(5000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
 
         public void closeConnection(){
