@@ -135,12 +135,9 @@ public class Server {
                                     });
                                 Thread.sleep(2000);
 
-                                System.out.println("Token count: " + tokenCount);
-                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
-                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue("sam", null);
+                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
                                 String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
-                                System.out.println("/users/" + userID + "/tokens/" + tokenCount);
-                                firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(String.valueOf(newCount), null);
+                                firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(newCount, null);
 
 
 
