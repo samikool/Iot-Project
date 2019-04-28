@@ -138,7 +138,7 @@ public class Server {
                                 System.out.println("Token count: " + tokenCount);
                                 System.out.println("/users/" + userID + "/tokens/" + tokenCount);
                                 firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue("sam", null);
-                                int newCount = Integer.parseInt(tokenCount) + 1;
+                                String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
                                 System.out.println("/users/" + userID + "/tokens/" + tokenCount);
                                 firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(String.valueOf(newCount), null);
 
