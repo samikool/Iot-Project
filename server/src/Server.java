@@ -4,10 +4,8 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -75,8 +73,10 @@ public class Server {
     private class ConnectionHandler implements Runnable{
         private Socket clientSocket;
         private int clientID;
-        private ObjectInputStream input;
-        private ObjectOutputStream output;
+        //private ObjectInputStream input;
+        //private ObjectOutputStream output;
+        private BufferedWriter output;
+        private BufferedReader input;
         private boolean activeConnection;
         private String token;
         private String tokenCount;
@@ -89,11 +89,12 @@ public class Server {
 
         public void waitForConnection() throws IOException{
             clientSocket = serverSocket.accept();
+
             activeConnection = true;
         }
 
         public void initializeBuffers(){
-            try{
+            /*try{
                 //get input buffer initialized
                 input = new ObjectInputStream(clientSocket.getInputStream());
 
@@ -106,14 +107,23 @@ public class Server {
                 System.err.println(e);
                 e.printStackTrace();
                 activeConnection = false;
+            }*/
+
+            try{
+                output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                output.flush();
+                input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            }catch (Exception e){
+                e.printStackTrace();
             }
+
 
         }
 
         public void processConnection(){
             int secondsActive = 0;
             while (activeConnection){
-                try{
+                /*try{
                     String type = (String) input.readObject();
                         if(type.matches("client")){
                             String userID = (String) input.readObject();
@@ -199,7 +209,9 @@ public class Server {
                         }
 
                     System.out.println(type);
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
             }
         }
 
