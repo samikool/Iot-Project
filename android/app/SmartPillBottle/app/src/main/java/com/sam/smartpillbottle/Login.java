@@ -136,7 +136,8 @@ public class Login extends AppCompatActivity {
                         //send token to server
                         serverSender.addData("client");
                         serverSender.addData(firebaseAuth.getCurrentUser().getUid());
-                        serverSender.addData(token);
+                        serverSender.addData(token.substring(0, token.length()/2));
+                        serverSender.addData(token.substring(token.length()/2));
                         executor.execute(serverSender);
 
                         //show next screen

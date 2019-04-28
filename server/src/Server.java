@@ -114,6 +114,7 @@ public class Server {
                         if(type.matches("client")){
                             String userID = (String) input.readObject();
                             String token = (String) input.readObject();
+                            token += (String) input.readObject();
 
                             try{
                                 Message message = Message.builder()
@@ -131,7 +132,7 @@ public class Server {
                         else if(type.matches("bottle")){
 
                         }
-                        
+
                     System.out.println(type);
                 }catch (Exception e){}
             }
