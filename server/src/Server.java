@@ -135,9 +135,9 @@ public class Server {
                                         }
                                     });
 
-                                Thread.sleep(100);
+                                Thread.sleep(500);
 
-                                firebaseDatabase.child("/users/" + userID + "tokens/" + tokenCount)
+                                firebaseDatabase.child("/users/" + userID + "tokens/" + String.valueOf(Integer.parseInt(tokenCount) - 1))
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -154,7 +154,7 @@ public class Server {
 
                                             }
                                         });
-                                Thread.sleep(100);
+                                Thread.sleep(500);
 
 
                                 if(newToken){
