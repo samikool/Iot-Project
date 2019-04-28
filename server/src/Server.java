@@ -114,6 +114,9 @@ public class Server {
                 output.flush();
                 input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 System.out.println("Buffers success");
+                System.out.println(input.readLine());
+                output.write("hello to you");
+                output.flush();
             }catch (Exception e){
                 e.printStackTrace();
             }
