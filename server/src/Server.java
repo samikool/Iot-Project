@@ -212,6 +212,7 @@ public class Server {
                             String[] data = combinedData.split(",");
                             System.out.println(data);
                             closeConnection();
+                            activeConnection = false;
                         }
                         else{
                             System.err.println("Problem finding type");
