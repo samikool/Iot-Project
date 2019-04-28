@@ -209,6 +209,7 @@ public class Server {
                         }
                         else if(type.equals("bottle")){
                             String message = input.readLine();
+                            System.out.println(message);
                             if(message.equals("gps")){
                                 System.out.println("bottle detected");
                                 String combinedData = input.readLine();
