@@ -158,7 +158,8 @@ public class Server {
                                                 for(int i=0; i<intTokenCount; i++){
                                                     String tempToken = (String) dataSnapshot.child(String.valueOf(i)).getValue();
                                                     System.out.println(tempToken);
-                                                    if(tempToken.matches(token)){
+                                                    if(tempToken.equals(token)){
+                                                        System.out.println("Token not found");
                                                         newToken = false;
                                                         break;
                                                     }
