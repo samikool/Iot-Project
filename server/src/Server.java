@@ -137,7 +137,7 @@ public class Server {
 
                                 Thread.sleep(100);
 
-                                firebaseDatabase.child("/users/" + userID + "tokens")
+                                firebaseDatabase.child("/users/" + userID + "/tokens")
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
