@@ -5,13 +5,13 @@ import java.util.zip.DataFormatException;
 
 public class ServerSender implements Runnable{
     private Connection connection;
-    private ArrayBlockingQueue<Object> dataArray = new ArrayBlockingQueue<>(128);
+    private ArrayBlockingQueue<String> dataArray = new ArrayBlockingQueue<>(128);
 
     public ServerSender(Connection connection){
         this.connection = connection;
     }
 
-    public void addData(Object data){
+    public void addData(String data){
         dataArray.add(data);
     }
 

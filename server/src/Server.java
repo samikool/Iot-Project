@@ -206,11 +206,18 @@ public class Server {
                             }
                         }
                         else if(type.equals("bottle")){
-                            System.out.println("bottle detected");
-                            String combinedData = input.readLine();
-                            System.out.println(combinedData);
-                            String[] data = combinedData.split(",");
-                            System.out.println(data);
+                            if(input.readLine().equals("gps")){
+                                System.out.println("bottle detected");
+                                String combinedData = input.readLine();
+                                String[] data = combinedData.split(",");
+                                //deal with database
+
+                            }
+                            else if(input.readLine().equals("open")){
+                                String combinedData = input.readLine();
+                                String data[] = combinedData.split(",");
+                                //deal with database
+                            }
                             closeConnection();
                             activeConnection = false;
                         }

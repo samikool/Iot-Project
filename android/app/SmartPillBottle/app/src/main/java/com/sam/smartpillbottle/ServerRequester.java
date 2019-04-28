@@ -4,7 +4,7 @@ import java.util.zip.DataFormatException;
 
 public class ServerRequester implements Runnable{
     private Connection connection;
-    private Object data;
+    private String data;
 
     public boolean hasDataReady() {
         return dataReady;
@@ -18,7 +18,7 @@ public class ServerRequester implements Runnable{
         dataReady = false;
     }
 
-    public Object getData() {
+    public String getData() {
         while(!dataReady){
 
         }
