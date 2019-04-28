@@ -135,17 +135,22 @@ public class Server {
                                         }
                                     });
 
-                                Thread.sleep(500);
+                                Thread.sleep(100);
 
-                                firebaseDatabase.child("/users/" + userID + "tokens/" + String.valueOf(Integer.parseInt(tokenCount) - 1))
+                                firebaseDatabase.child("/users/" + userID + "tokens/")
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                                if(dataSnapshot.hasChildren()){
-                                                    newToken = true;
-                                                }
-                                                else{
-                                                    newToken = false;
+                                                int intTokenCount = Integer.parseInt(tokenCount);
+                                                for(int i=0; i<intTokenCount; i++){
+                                                    if(dataSnapshot.hasChild(i + "/" + token)){
+                                                        newToken = false;
+                                                        break;
+                                                    }
+                                                    else{
+                                                        newToken = true;
+                                                        break;
+                                                    }
                                                 }
                                             }
 
@@ -154,7 +159,7 @@ public class Server {
 
                                             }
                                         });
-                                Thread.sleep(500);
+                                Thread.sleep(100);
 
 
                                 if(newToken){
