@@ -144,8 +144,8 @@ public class Server {
                                                 int intTokenCount = Integer.parseInt(tokenCount);
                                                 for(int i=0; i<intTokenCount; i++){
                                                     if(dataSnapshot.hasChild(String.valueOf(i))){
+                                                        System.out.println("");
                                                         newToken = false;
-                                                        break;
                                                     }
                                                     else{
                                                         newToken = true;
