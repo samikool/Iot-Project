@@ -125,7 +125,7 @@ public class Server {
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                            tokenCount = String.valueOf(dataSnapshot.getValue());
+                                            tokenCount = String.valueOf((int) dataSnapshot.getValue());
                                         }
 
                                         @Override
