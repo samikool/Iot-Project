@@ -118,7 +118,7 @@ public class Login extends AppCompatActivity {
                         login();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         firebaseDatabase.getReference("/users/" + user.getUid() + "/email").setValue(user.getEmail());
-                        firebaseDatabase.getReference("/users/" + user.getUid() + "/token/count").setValue(0);
+                        firebaseDatabase.getReference("/users/" + user.getUid() + "/tokens/count").setValue(0);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
