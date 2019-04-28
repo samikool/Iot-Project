@@ -133,10 +133,10 @@ public class Server {
 
                                         }
                                     });
-                                Thread.sleep(2000);
+                                //Thread.sleep(0);
 
                                 firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
-                                String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
+                                int newCount = Integer.parseInt(tokenCount) + 1;
                                 firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(newCount, null);
 
 
