@@ -135,7 +135,6 @@ public class Server {
                             System.out.println("Token Full: " + token);
 
                             try{
-
                                 firebaseDatabase.child("/users/" + userID + "/tokens/count")
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -231,7 +230,6 @@ public class Server {
                         else{
                             System.err.println("Problem finding type");
                         }
-                    System.out.println(type);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
