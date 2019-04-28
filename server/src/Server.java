@@ -209,14 +209,16 @@ public class Server {
                             }
                         }
                         else if(type.equals("bottle")){
-                            if(input.readLine().equals("gps")){
+                            String message = input.readLine();
+                            if(message.equals("gps")){
                                 System.out.println("bottle detected");
                                 String combinedData = input.readLine();
                                 String[] data = combinedData.split(",");
                                 //deal with database
 
                             }
-                            else if(input.readLine().equals("open")){
+                            else if(message.equals("open")){
+                                System.out.println("open detected");
                                 String combinedData = input.readLine();
                                 System.out.println(combinedData);
                                 String data[] = combinedData.split(",");
