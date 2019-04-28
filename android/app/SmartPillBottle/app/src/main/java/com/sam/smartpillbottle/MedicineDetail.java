@@ -1,7 +1,11 @@
 package com.sam.smartpillbottle;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,6 +14,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import org.w3c.dom.Text;
 
@@ -22,6 +29,10 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
     private TextView nextDose;
     private TextView remainingPills;
     private TextView pillsPerDose;
+    private Button deleteButton;
+    private DatabaseReference firebaseDatabase;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +42,10 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        firebaseDatabase = MedicineList.getFirebaseDatabase();
+        firebaseUser = MedicineList.getFirebaseUser();
+        firebaseAuth = MedicineList.getFirebaseAuth();
 
         medication = MedicineList.getClickedMedication();
 
@@ -45,6 +60,18 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         lastDose.setText("Last Dose: " + medication.getLastDose().toString());
         nextDose.setText("Next Dose: " + medication.getNextDose().toString());
         pillsPerDose.setText("Pills Per Dose: " + medication.getPillsPerDose());
+
+        deleteButton = findViewById(R.id.detailDeleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog confirm = new Dialog(MedicineDetail.this);
+
+                confirm.show();
+                firebaseDatabase.child("users/" + firebaseUser.getUid() +"/medicine/" + medication.getMedicineUID()).removeValue();
+                finish();
+            }
+        });
 
 
     }
@@ -69,4 +96,6 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17 ),2000,null);
     }
+
+
 }

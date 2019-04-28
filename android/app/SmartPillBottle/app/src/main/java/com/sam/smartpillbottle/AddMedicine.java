@@ -1,5 +1,6 @@
 package com.sam.smartpillbottle;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 public class AddMedicine extends AppCompatActivity {
     private DatabaseReference firebaseDatabase;
@@ -70,17 +73,89 @@ public class AddMedicine extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //get info
+                String medicineUID = medicineUIDBox.getText().toString();
+                String medicineName = (String) medicineNameBox.getText().toString();
+                String dosesPerDay = (String) dosesPerDayBox.getText().toString();
+                String pillsPerDose = (String) pillsPerDoseBox.getText().toString();
+                String remainingPills = (String) currentPillsBox.getText().toString();
+                String days = "";
+                if(everydayCheckbox.isChecked()){
+                    days = "all";
+                }
+                else{
+                    if(mondayCheckbox.isChecked()){
+                        days += "monday,";
+                    }
+                    if(tuesdayCheckbox.isChecked()){
+                        days += "tuesday";
+                    }
+                    if(wednesdayCheckbox.isChecked()){
+                        days += "wednesday";
+                    }
+                    if(thursdayCheckbox.isChecked()){
+                        days += "thrusday";
+                    }
+                    if(fridayCheckbox.isChecked()){
+                        days += "friday";
+                    }
+                    if(saturdayCheckbox.isChecked()){
+                        days += "saturday";
+                    }
+                    if(sundayCheckbox.isChecked()){
+                        days +="sunday";
+                    }
+                }
+
+                Date today = new Date(Calendar.getInstance().get(Calendar.YEAR),
+                        Calendar.getInstance().get(Calendar.MONTH),
+                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
                 //create medication
+                Medication medication = new Medication(MedicineList.getNextMedicationLocalID(), medicineUID, medicineName,
+                        pillsPerDose, dosesPerDay, remainingPills, "0", "0", today, today);
 
                 //write to database
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/name").setValue(medicineName);
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/dosesPerDay").setValue(dosesPerDay);
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/pillsPerDose").setValue(pillsPerDose);
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/remaining").setValue(medicineName);
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/latitude").setValue("0");
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/longitude").setValue("0");
+                firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/days").setValue(days);
 
-                //call get medication method from medicinelist
-                //maybe the on resume method or maybe make it static ;)
+                finish();
+            }
+        });
 
-                //start medication list activity on successful write to database
+        everydayCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(everydayCheckbox.isChecked()){
+                    mondayCheckbox.setChecked(false);
+                    tuesdayCheckbox.setChecked(false);
+                    wednesdayCheckbox.setChecked(false);
+                    thursdayCheckbox.setChecked(false);
+                    fridayCheckbox.setChecked(false);
+                    saturdayCheckbox.setChecked(false);
+                    sundayCheckbox.setChecked(false);
 
-                //no need for error checking lol
+                    mondayCheckbox.setClickable(false);
+                    tuesdayCheckbox.setClickable(false);
+                    wednesdayCheckbox.setClickable(false);
+                    thursdayCheckbox.setClickable(false);
+                    fridayCheckbox.setClickable(false);
+                    saturdayCheckbox.setClickable(false);
+                    sundayCheckbox.setClickable(false);
+                }
+                else if(!everydayCheckbox.isChecked()){
+                    mondayCheckbox.setClickable(true);
+                    tuesdayCheckbox.setClickable(true);
+                    wednesdayCheckbox.setClickable(true);
+                    thursdayCheckbox.setClickable(true);
+                    fridayCheckbox.setClickable(true);
+                    saturdayCheckbox.setClickable(true);
+                    sundayCheckbox.setClickable(true);
+                }
             }
         });
     }

@@ -33,8 +33,6 @@ public class MedicineList extends AppCompatActivity {
     private ServerSender serverSender;
     private ExecutorService executor;
     private LinearLayout medicineListContainer;
-    private TextView test1;
-    private TextView test2;
     private static FirebaseAuth firebaseAuth;
     private static FirebaseUser firebaseUser;
     private static DatabaseReference firebaseDatabase;
@@ -52,6 +50,8 @@ public class MedicineList extends AppCompatActivity {
     public static FirebaseAuth getFirebaseAuth() {
         return firebaseAuth;
     }
+
+    public static DatabaseReference getFirebaseDatabase() {return firebaseDatabase;}
 
 
     @Override
@@ -77,26 +77,6 @@ public class MedicineList extends AppCompatActivity {
         serverSender = new ServerSender(connection);
 
         medicineListContainer = (LinearLayout) findViewById(R.id.medicineListContainer);
-        getMedicineFromDatabase();
-
-
-
-
-
-
-
-        /*LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view1 = View.inflate(this, R.layout.activity_medicine_tile, null);
-        View view = inflater.inflate(R.layout.activity_medicine_tile, null);
-
-        medicineListContainer.addView(view);
-        medicineListContainer.addView(view1);
-
-        test1 = view.findViewById(R.id.tileMedicineNameLabel);
-        test2 = view1.findViewById(R.id.tileMedicineNameLabel);*/
-
-
-
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
@@ -114,35 +94,7 @@ public class MedicineList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String test = "testing123";
-                serverSender.addData(test);
-                executor.execute(serverSender);
-                //executor.execute(serverRequester);
-
-                serverSender.addData("message");
-                executor.execute(serverSender);
-                executor.execute(serverRequester);
-                String response = (String) serverRequester.getData();
-                if(response.matches("ready")){
-                    serverSender.addData(firebaseUser.getUid());
-                    //System.out.println("added");
-                    serverSender.addData(token.substring(0, token.length()/2));
-                    //System.out.println("added");
-                    serverSender.addData(token.substring(token.length()/2));
-                    executor.execute(serverSender);
-                }
-
                 startActivity(new Intent(MedicineList.this, AddMedicine.class ));
-
-
-                //serverSender.setData("notification");
-                //executor.execute(serverSender);
-                //executor.execute(serverRequester);
-
-                //NotificationCompat.Builder builder = new NotificationCompat.Builder(this, )
-
-
-                //Snackbar.make(view, (String) serverRequester.getData(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
@@ -220,10 +172,23 @@ public class MedicineList extends AppCompatActivity {
         return medicineArrayList.get(clickedTile);
     }
 
+    public static int getNextMedicationLocalID (){return medicineArrayList.size();}
+
     @Override
     protected void onStop(){
         super.onStop();
         firebaseAuth.signOut();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        while(!medicineViewArrayList.isEmpty() && !medicineArrayList.isEmpty()){
+            medicineViewArrayList.remove(0);
+            medicineArrayList.remove(0);
+        }
+        medicineListContainer.removeAllViewsInLayout();
+        getMedicineFromDatabase();
     }
 
 
