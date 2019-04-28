@@ -143,7 +143,7 @@ public class Server {
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 int intTokenCount = Integer.parseInt(tokenCount);
                                                 for(int i=0; i<intTokenCount; i++){
-                                                    if(dataSnapshot.hasChild(i-1 + "/" + token)){
+                                                    if(dataSnapshot.hasChild(String.valueOf(i))){
                                                         newToken = false;
                                                         break;
                                                     }
