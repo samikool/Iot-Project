@@ -113,6 +113,7 @@ public class Server {
                 output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 output.flush();
                 input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println("Buffers success");
             }catch (Exception e){
                 e.printStackTrace();
             }
