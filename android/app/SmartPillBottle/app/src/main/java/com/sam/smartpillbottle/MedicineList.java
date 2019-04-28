@@ -78,16 +78,6 @@ public class MedicineList extends AppCompatActivity {
 
         medicineListContainer = (LinearLayout) findViewById(R.id.medicineListContainer);
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if(!task.isSuccessful()){
-                    return;
-                }
-                token = task.getResult().getToken();
-            }
-        });
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addMedicineButton);
 
         fab.show();

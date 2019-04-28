@@ -10,13 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +35,7 @@ public class Login extends AppCompatActivity {
     private static ExecutorService executor;
     private ServerRequester serverRequester;
     private ServerSender serverSender;
+    String token;
 
     public static Connection getConnection(){return connection;}
 
@@ -53,6 +58,17 @@ public class Login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+
+        //get token for app
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if(!task.isSuccessful()){
+                    return;
+                }
+                token = task.getResult().getToken();
+            }
+        });
 
 
 
@@ -117,6 +133,13 @@ public class Login extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        //send token to server
+                        serverSender.addData("client");
+                        serverSender.addData(firebaseAuth.getCurrentUser().getUid());
+                        serverSender.addData(token);
+                        executor.execute(serverSender);
+
+                        //show next screen
                         showMedicineList();
                     }
                 })

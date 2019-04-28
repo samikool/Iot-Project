@@ -110,33 +110,29 @@ public class Server {
             int secondsActive = 0;
             while (activeConnection){
                 try{
-                    String command = (String) input.readObject();
-                    if(command.equals("message")){
+                    String type = (String) input.readObject();
+                        if(type.matches("client")){
+                            String userID = (String) input.readObject();
+                            String token = (String) input.readObject();
 
-                        output.writeObject("ready");
-                        output.flush();
-                        System.out.println("sent ready");
-                        String userID = (String) input.readObject();
-                        System.out.println(userID);
-                        String token = (String) input.readObject();
-                        System.out.println("Token part 1: " + token);
-                        token += (String) input.readObject();
-                        System.out.println("Token part full: " + token);
+                            try{
+                                Message message = Message.builder()
+                                        .putData("title", "UserID: " + userID)
+                                        .putData("content", "Token: " + token)
+                                        .setToken(token)
+                                        .build();
 
-                        try{
-                            Message message = Message.builder()
-                                    .putData("title", "UserID: " + userID)
-                                    .putData("content", "Token: " + token)
-                                    .setToken(token)
-                                    .build();
-
-                            String response = FirebaseMessaging.getInstance().send(message);
-                            System.out.println("Successfully sent message: " + response);
-                        }catch (Exception e){
-                            e.printStackTrace();
+                                String response = FirebaseMessaging.getInstance().send(message);
+                                System.out.println("Successfully sent message: " + response);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                    System.out.println(command);
+                        else if(type.matches("bottle")){
+
+                        }
+                        
+                    System.out.println(type);
                 }catch (Exception e){}
             }
         }
