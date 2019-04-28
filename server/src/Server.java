@@ -125,7 +125,7 @@ public class Server {
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                            tokenCount = String.valueOf((int) dataSnapshot.getValue());
+                                            tokenCount = String.valueOf(dataSnapshot.getValue());
                                         }
 
                                         @Override
@@ -133,11 +133,11 @@ public class Server {
 
                                         }
                                     });
-                                //Thread.sleep(0);
+                                Thread.sleep(2000);
 
                                 firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
-                                int newCount = Integer.parseInt(tokenCount) + 1;
-                                firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(newCount, null);
+                                String newCount = String.valueOf(Integer.parseInt(tokenCount) + 1);
+                                firebaseDatabase.child("/users/" + userID + "/tokens/count").setValue(Integer.valueOf(newCount), null);
 
 
 
