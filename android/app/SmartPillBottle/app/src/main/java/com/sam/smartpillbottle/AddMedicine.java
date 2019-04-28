@@ -1,8 +1,10 @@
 package com.sam.smartpillbottle;
 
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -44,8 +46,8 @@ public class AddMedicine extends AppCompatActivity {
 
         //initialize Firebase stuff
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseAuth = MedicineList.getFirebaseAuth();
+        firebaseUser = MedicineList.getFirebaseUser();
 
         //initialize GUI
         medicineUIDBox = findViewById(R.id.addMedicineUIDBox);
@@ -64,68 +66,23 @@ public class AddMedicine extends AppCompatActivity {
         currentPillsBox = findViewById(R.id.addNumOfPillsBox);
         addMedicineButton = findViewById(R.id.addAddMedicineButton);
 
-
-
-        //test reading and writing to database
-        //read medicine in database and display on gui
-        firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine").addListenerForSingleValueEvent(new ValueEventListener() {
+        addMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.toString());
+            public void onClick(View v) {
+                //get info
 
-                String days = (String) dataSnapshot.child("days").getValue();
-                if(days.matches("all")){
-                    everydayCheckbox.setChecked(true);
-                    for(int i=0; i<dayBoxes.length; i++){
-                        dayBoxes[i].setChecked(false);
-                    }
-                }
-                else{
-                    String[] daysArray = days.split(",");
-                    for(int i=0; i<daysArray.length; i++){
-                        switch(daysArray[i]){
-                            case "monday":
-                                mondayCheckbox.setChecked(true);
-                                i++;
-                            case "tuesday":
-                                tuesdayCheckbox.setChecked(true);
-                                i++;
-                            case "wednesday":
-                                wednesdayCheckbox.setChecked(true);
-                                i++;
-                            case "thursday":
-                                thursdayCheckbox.setChecked(true);
-                                i++;
-                            case "friday":
-                                fridayCheckbox.setChecked(true);
-                                i++;
-                            case "saturday":
-                                saturdayCheckbox.setChecked(true);
-                                i++;
-                            case "sunday":
-                                sundayCheckbox.setChecked(true);
-                                i++;
-                                break;
-                        }
-                    }
-                }
+                //create medication
 
+                //write to database
 
-                medicineNameBox.setText((String) dataSnapshot.child("name").getValue());
-                pillsPerDoseBox.setText((String) dataSnapshot.child("pillsPerDose").getValue());
-                dosesPerDayBox.setText((String) dataSnapshot.child("dosesPerDay").getValue());
-                currentPillsBox.setText((String) dataSnapshot.child("remaining").getValue());
+                //call get medication method from medicinelist
+                //maybe the on resume method or maybe make it static ;)
 
-                //System.out.println(dataSnapshot.toString()/);
-                System.out.println();
-            }
+                //start medication list activity on successful write to database
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //no need for error checking lol
             }
         });
-
     }
 
 

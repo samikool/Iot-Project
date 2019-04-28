@@ -2,6 +2,7 @@ package com.sam.smartpillbottle;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,9 +11,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 public class MedicineDetail extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Medication medication;
+    private TextView medicineName;
+    private TextView lastDose;
+    private TextView nextDose;
+    private TextView remainingPills;
+    private TextView pillsPerDose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +31,23 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
 
+        medication = MedicineList.getClickedMedication();
+
+        medicineName = findViewById(R.id.detailMedicineNameLabel);
+        lastDose = findViewById(R.id.detailLastDoseLabel);
+        nextDose = findViewById(R.id.detailNextDoseLabel);
+        remainingPills = findViewById(R.id.detailRemainingPillsLabel);
+        pillsPerDose = findViewById(R.id.detailRequiredDoseLabel);
+
+        medicineName.setText(medication.getName());
+        remainingPills.setText("Remaining Pills: "  + medication.getRemainingPills());
+        lastDose.setText("Last Dose: " + medication.getLastDose().toString());
+        nextDose.setText("Next Dose: " + medication.getNextDose().toString());
+        pillsPerDose.setText("Pills Per Dose: " + medication.getPillsPerDose());
+
+
+    }
 
     /**
      * Manipulates the map once available.
@@ -39,10 +63,10 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
+        LatLng medicineLocation = new LatLng(Double.parseDouble(medication.getLatitude()), Double.parseDouble(medication.getLongitude()));
+        mMap.addMarker(new MarkerOptions().position(medicineLocation).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(medicineLocation, 17));
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15),2000,null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17 ),2000,null);
     }
 }

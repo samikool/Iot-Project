@@ -1,0 +1,40 @@
+{
+  "claimed" : {
+    "sadfue2n3lb09g" : true,
+    "xfo43nfg8s9d" : false
+  },
+  "users" : {
+    "7U5eX3BaxhbEMy7hXrlVFAI2ZaC3" : {
+      "email" : "sam.morgan44@gmail.com",
+      "medicine" : {
+        "ms382ndlsdf9e" : {
+          "days" : "monday,tuesday,friday",
+          "dosePerDay" : "4",
+          "name" : "Tylenol",
+          "pillsPerDose" : "2",
+          "remaining" : "150",
+          "latitude" : "41.659704",
+          "longitude" : "-91.536853"
+        },
+        "n2jd9glo3bhsy" : {
+          "days" : "tuesday,thrusday,saturday,sunday",
+          "dosePerDay" : "1",
+          "name" : "Advil PM",
+          "pillsPerDose" : "4",
+          "remaining" : "150",
+          "latitude" : "41.659214",
+          "longitude" : "-91.536877"
+        },
+        "sadfue2n3lb09g" : {
+          "days" : "all",
+          "dosePerDay" : "6",
+          "name" : "Ibprofen",
+          "pillsPerDose" : "2",
+          "remaining" : "150",
+          "latitude" : "41.661306",
+          "longitude" : "-91.536184"
+        }
+      }
+    }
+  }
+}

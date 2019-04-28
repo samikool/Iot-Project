@@ -1,3 +1,5 @@
+package com.sam.smartpillbottle;
+
 /**
  * Date is class that represents a date by keeping track of its year, month, and day.
  * There are several constructors available for the Date class, and if any of the instance

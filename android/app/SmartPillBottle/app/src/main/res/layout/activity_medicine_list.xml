@@ -56,6 +56,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
+
+
             </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.Toolbar
@@ -63,20 +65,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="102dp"
                 app:layout_collapseMode="pin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_medicine_list" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addMedicineButton"
-        android:layout_width="78dp"
-        android:layout_height="75dp"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/toolbar_layout"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:visibility="visible"
+        app:fabSize="auto"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="end|top"
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="80dp"
+        tools:visibility="visible" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_medicine_list" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>
