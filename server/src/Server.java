@@ -123,7 +123,7 @@ public class Server {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String tokenCount = (String) dataSnapshot.getValue();
-                                            firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(token, null);
+                                            firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue("sam", null);
                                             int newCount = Integer.parseInt(tokenCount) + 1;
                                             firebaseDatabase.child("/users/" + userID + "/tokens/" + tokenCount).setValue(String.valueOf(newCount), null);
                                         }
