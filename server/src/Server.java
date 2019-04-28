@@ -133,6 +133,7 @@ public class Server {
 
                                         }
                                     });
+                                Thread.sleep(2000);
 
                                 System.out.println("Token count: " + tokenCount);
                                 System.out.println("/users/" + userID + "/tokens/" + tokenCount);
