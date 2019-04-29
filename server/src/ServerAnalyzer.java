@@ -55,7 +55,7 @@ public class ServerAnalyzer implements Runnable{
             //going through user medicine
             int currentMedicine = 0;
             for(DataSnapshot medicineSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine").getChildren()) {
-                if(!(medicineSnapshot.child("/taken/count").getValue() == null) && (long) medicineSnapshot.child("/taken/count").getValue() != 0){
+                if(!(medicineSnapshot.child("/taken/count").getValue() == null) && (long) medicineSnapshot.child("/taken/count").getValue() > 5){
                     int dateCount = Math.toIntExact((long) medicineSnapshot.child("/taken/count").getValue());
 
                     for(int j=0; j<dateCount; j++){
@@ -77,9 +77,9 @@ public class ServerAnalyzer implements Runnable{
                         max = maxRepeating(times, times.length, 23);
                     }
 
-                    System.out.println("User: " + usernameKeys.get(i));
-                    System.out.println("Medicine: " + medicineSnapshot.getKey());
-                    System.out.println("Class: " + max);
+                    //System.out.println("User: " + usernameKeys.get(i));
+                    //System.out.println("Medicine: " + medicineSnapshot.getKey());
+                    //System.out.println("Class: " + max);
 
                     String lastDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/lastDose").getValue();
                     String nextDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose").getValue();
