@@ -155,9 +155,9 @@ public class Server {
                             String userID = input.readLine();
                             System.out.println(userID);
                             token = input.readLine();
-                            System.out.println("Token Part1: " + token);
+                            //System.out.println("Token Part1: " + token);
                             token += input.readLine();
-                            System.out.println("Token Full: " + token);
+                            //System.out.println("Token Full: " + token);
 
                             try{
                                 firebaseDatabase.child("/users/" + userID + "/tokens/count")
@@ -182,7 +182,7 @@ public class Server {
                                                 int intTokenCount = Integer.parseInt(tokenCount);
                                                 for(int i=0; i<intTokenCount; i++){
                                                     String tempToken = (String) dataSnapshot.child(String.valueOf(i)).getValue();
-                                                    System.out.println(tempToken);
+                                                    //System.out.println(tempToken);
                                                     if(tempToken.equals(token)){
                                                         System.out.println("Token not found");
                                                         newToken = false;
@@ -243,7 +243,7 @@ public class Server {
                             /*for(int i=0; i<data.length; i++){
                                 System.out.println(data[i]);
                             }*/
-                            
+
                             //deal with database
                             //System.out.println(bigSnapshot.child("/claimed/").child(data[12]).getValue());
                             if(!bigSnapshot.child("/claimed/").hasChild(data[12])){
