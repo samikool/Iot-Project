@@ -122,6 +122,7 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
+
                 System.out.println(bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue());
                // long remainingDays = Integer.part((String) );
                 if(!sent && 16 < 15){
