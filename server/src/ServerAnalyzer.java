@@ -26,7 +26,7 @@ public class ServerAnalyzer implements Runnable{
         dateList = new ArrayList<int[]>(256);
 
         while(true){
-            System.out.println("Starting analysis...");
+            //System.out.println("Starting analysis...");
             dataReady = false;
             firebaseDatabase = Server.getFirebaseDatabase();
             firebaseDatabase.child("/users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,7 +123,7 @@ public class ServerAnalyzer implements Runnable{
         }
 
             try{
-                System.out.println("Analyzer Sleeping");
+                //System.out.println("Analyzer Sleeping");
                 Thread.sleep(500);
             }catch (InterruptedException e){
                 e.printStackTrace();
