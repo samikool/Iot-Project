@@ -249,7 +249,7 @@ public class Server {
                                     System.out.println(users.getKey());
                                     for(DataSnapshot medicine: users.child("/medicine/").getChildren()){
                                         System.out.println(medicine.getKey());
-                                        if(medicine.getKey().equals(data[12])){
+                                        //if(medicine.getKey().equals(data[12])){
                                             String latitude = convertLocation(data[3], data[4]).substring(0, 8);
                                             String longitude = convertLocation(data[3], data[4].substring(0, 8));
                                             firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude").setValue(latitude, null);
@@ -257,7 +257,7 @@ public class Server {
                                             firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/temperature").setValue(data[13], null);
                                             Calendar today = Calendar.getInstance();
                                             String todayString = today.get(Calendar.YEAR) + "" + today.get(Calendar.MONTH);
-                                        }
+                                        //}
                                     }
                                 }
                             }
