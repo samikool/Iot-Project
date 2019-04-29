@@ -122,10 +122,10 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
-                String remainingDays = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue();
-                
+                long remainingDays = (long) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue();
+
                 System.out.println(remainingDays);
-                if(!sent && (Integer.valueOf(remainingDays) < 15)){
+                if(!sent && remainingDays < 15){
                     String medicineName = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/name").getValue();
 
                     for(DataSnapshot tokenSnap : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
