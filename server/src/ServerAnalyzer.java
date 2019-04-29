@@ -68,7 +68,8 @@ public class ServerAnalyzer implements Runnable{
                     }
 
                     double[] doubles = new double[dateList.size()];
-                    File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
+                    //File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
+                    File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
                     int[] times = new int[dateCount];
                     for(int k=0; k<dateCount; k++){
                         times[k] = MachineLearning.knearest(trainingData,  dateList.get(k), 2);

@@ -48,11 +48,11 @@ public class Server {
         serverAnalyzer = new ServerAnalyzer();
 
         //linux server
-        //FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //computer at home
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //laptop
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
