@@ -82,8 +82,8 @@ public class ServerAnalyzer implements Runnable{
                     System.out.println("Medicine: " + medicineSnapshot.getKey());
                     System.out.println("Class: " + max);
 
-                    String lastDose = (String) bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/lastDose").getValue();
-                    String nextDose = (String) bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose").getValue();
+                    String lastDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/lastDose").getValue();
+                    String nextDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose").getValue();
                     String[] lastDoseData = lastDose.split(",");
                     String[] nextDoseData = nextDose.split(",");
                     if(lastDoseData[2].equals(nextDoseData[2])){
