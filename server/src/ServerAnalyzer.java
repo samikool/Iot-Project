@@ -143,6 +143,7 @@ public class ServerAnalyzer implements Runnable{
                            try{
                                String response = FirebaseMessaging.getInstance().send(message);
                                System.out.println("User Notified" + response);
+                               Thread.sleep(2000);
 
                            }catch (Exception e){
                                e.printStackTrace();
