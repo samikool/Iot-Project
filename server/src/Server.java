@@ -240,12 +240,15 @@ public class Server {
                                 System.out.println(data[i]);
                             }
                             //deal with database
+                            System.out.println(bigSnapshot.child("/claimed/").child(data[12]).getValue());
                             if(!bigSnapshot.child("/claimed/").hasChild(data[12])){
                                 firebaseDatabase.child("/claimed/").child(data[12]).setValue(false, null);
                             }
                             else if((boolean) bigSnapshot.child("/claimed/").child(data[12]).getValue()){
                                 for(DataSnapshot users : bigSnapshot.child("/users/").getChildren()){
+                                    System.out.println(users.getKey());
                                     for(DataSnapshot medicine: users.child("/medicine/").getChildren()){
+                                        System.out.println(medicine.getKey());
                                         if(medicine.getKey() == data[12]){
                                             String latitude = convertLocation(data[3], data[4]).substring(0, 8);
                                             String longitude = convertLocation(data[3], data[4].substring(0, 8));
