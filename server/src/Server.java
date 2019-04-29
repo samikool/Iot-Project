@@ -251,8 +251,8 @@ public class Server {
                                         System.out.println(medicine.getKey());
                                         System.out.println(medicine.getKey().equals(data[12]));
                                         if(medicine.getKey().equals(data[12])){
-                                            String latitude = convertLocation(data[3], data[4]).substring(0, 6);
-                                            String longitude = convertLocation(data[3], data[4].substring(0, 6));
+                                            String latitude = convertLocation(data[3], data[4]);
+                                            String longitude = convertLocation(data[3], data[4]);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude").setValue(latitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/longitude").setValue(longitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/temperature").setValue(data[13], null);
