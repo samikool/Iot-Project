@@ -234,9 +234,7 @@ public class MachineLearning {
                 index = i;
             }
         }
-        System.out.println("Class " + index*2);
         return index*2;
-
     }
 
     /**

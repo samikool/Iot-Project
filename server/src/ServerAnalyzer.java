@@ -5,7 +5,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.sun.deploy.util.ArrayUtil;
 
 import java.io.File;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ServerAnalyzer implements Runnable{
     private static DatabaseReference firebaseDatabase;
@@ -80,8 +82,32 @@ public class ServerAnalyzer implements Runnable{
                     System.out.println("Medicine: " + medicineSnapshot.getKey());
                     System.out.println("Class: " + max);
 
-                    String lastDose = (String) bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("lastDose").getValue();
-                    bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("Next Dose: ");
+                    String lastDose = (String) bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/lastDose").getValue();
+                    String nextDose = (String) bigDataSnapshot.child((String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose").getValue();
+                    String[] lastDoseData = lastDose.split(",");
+                    String[] nextDoseData = nextDose.split(",");
+                    if(lastDoseData[2].equals(nextDoseData[2])){
+                        nextDose = "";
+                        for(int z=0; z<nextDoseData.length; z++){
+                            if(z == 2){
+                                nextDose += String.valueOf(Integer.valueOf(nextDoseData[z]) + 1);
+                            }else{
+                                nextDose += nextDoseData[z];
+                            }
+
+                        }
+                    }else{
+                        Calendar today = Calendar.getInstance();
+                        nextDose = today.get(Calendar.YEAR) + "," + today.get(Calendar.MONTH) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
+                        LocalTime time = LocalTime.now();
+                        int hour = max;
+                        int minute = 0;
+                        nextDose += hour + "," + minute;
+                        firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose")
+                                .setValue(nextDose, null);
+                    }
+
+
                 }else{
 
                 }

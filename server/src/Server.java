@@ -9,9 +9,11 @@ import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Server {
     private int port;
@@ -257,8 +259,22 @@ public class Server {
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/latitude").setValue(latitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/longitude").setValue(longitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/temperature").setValue(data[13], null);
+
+                                            //get remaining days of doses
+                                            int remainingPills = (int) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remmaining").getValue();
+                                            int dosesPerDay = (int) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/dosesPerDay").getValue();
+                                            int remainingDays = remainingPills/dosesPerDay;
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingDays").setValue(remainingDays, null);
+
+                                            //get current time
                                             Calendar today = Calendar.getInstance();
-                                            String todayString = today.get(Calendar.YEAR) + "" + today.get(Calendar.MONTH);
+                                            String lastDose = today.get(Calendar.YEAR) + "," + today.get(Calendar.MONTH) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
+                                            LocalTime time = LocalTime.now();
+                                            int hour = time.getHour();
+                                            int minute = time.getMinute();
+                                            lastDose += hour + "," + minute;
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/lastDose").setValue(lastDose, null);
+
                                         }
                                     }
                                 }
