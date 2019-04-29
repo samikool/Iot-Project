@@ -122,7 +122,7 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
-                /*
+
                 String remainingDays = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue();
 
                 System.out.println(remainingDays);
@@ -132,8 +132,7 @@ public class ServerAnalyzer implements Runnable{
                     for(DataSnapshot tokenSnap : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
                         System.out.println(tokenSnap.child("/count").getValue());
 
-                       for(int u=0; u<2; u++){
-                           String token = (String) tokenSnap.child(String.valueOf(u)).getValue();
+                           String token = (String) tokenSnap.child(String.valueOf(0)).getValue();
                            System.out.println(tokenSnap);
 
                            Message message = Message.builder()
@@ -150,9 +149,9 @@ public class ServerAnalyzer implements Runnable{
                            }catch (Exception e){
                                e.printStackTrace();
                            }
-                       }
+
                     }
-                }*/
+                }
             }
         }
 
