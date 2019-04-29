@@ -95,6 +95,9 @@ public class ServerAnalyzer implements Runnable{
                                 nextDose += nextDoseData[z];
                             }
 
+                            if(z != nextDoseData.length-1){
+                                nextDose += ",";
+                            }
                         }
                     }else{
                         Calendar today = Calendar.getInstance();
@@ -104,7 +107,7 @@ public class ServerAnalyzer implements Runnable{
                         int minute = 0;
                         nextDose += hour + "," + minute;
                     }
-                    firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose")
+                    firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose")
                             .setValue(nextDose, null);
 
 
