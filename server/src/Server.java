@@ -235,40 +235,41 @@ public class Server {
                         }
                         else if(type.equals("bottle")){
                             System.out.println("bottle detected");
+                            System.out.println("updating...");
                             String combinedData = input.readLine();
-                            System.out.println(combinedData);
+                            //System.out.println(combinedData);
                             String[] data = combinedData.split(",");
                             for(int i=0; i<data.length; i++){
                                 System.out.println(data[i]);
                             }
                             //deal with database
-                            System.out.println(bigSnapshot.child("/claimed/").child(data[12]).getValue());
+                            //System.out.println(bigSnapshot.child("/claimed/").child(data[12]).getValue());
                             if(!bigSnapshot.child("/claimed/").hasChild(data[12])){
                                 firebaseDatabase.child("/claimed/").child(data[12]).setValue(false, null);
                             }
                             else if((boolean) bigSnapshot.child("/claimed/").child(data[12]).getValue()){
                                 for(DataSnapshot users : bigSnapshot.child("/users/").getChildren()){
-                                    System.out.println(users.getKey());
+                                    //System.out.println(users.getKey());
                                     for(DataSnapshot medicine: users.child("/medicine/").getChildren()){
-                                        System.out.println(medicine.getKey());
-                                        System.out.println(medicine.getKey().equals(data[12]));
+                                        //System.out.println(medicine.getKey());
+                                        //System.out.println(medicine.getKey().equals(data[12]));
                                         if(medicine.getKey().equals(data[12])){
                                             String latitude = convertLocation(data[3], data[4]);
                                             String longitude = convertLocation(data[3], data[4]);
-                                            System.out.println("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude");
+                                            //System.out.println("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude");
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/latitude").setValue(latitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/longitude").setValue(longitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/temperature").setValue(data[13], null);
 
                                             //get remaining days of doses
                                             String remainingPills = (String) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").getValue();
-                                            System.out.println(remainingPills);
+                                            //System.out.println(remainingPills);
                                             String dosesPerDay = (String) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/dosesPerDay").getValue();
-                                            System.out.println(dosesPerDay);
+                                            //System.out.println(dosesPerDay);
                                             String pillsPerDose = (String) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/pillsPerDose").getValue();
-                                            System.out.println(pillsPerDose);
+                                            //System.out.println(pillsPerDose);
                                             remainingPills = String.valueOf(Integer.valueOf(remainingPills) - Integer.valueOf(pillsPerDose));
-                                            System.out.println(remainingPills);
+                                            //System.out.println(remainingPills);
                                             String remainingDays = String.valueOf(Math.toIntExact(Integer.valueOf(remainingPills)/(Integer.valueOf(pillsPerDose) * Integer.valueOf(dosesPerDay))));
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingDays").setValue(remainingDays, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").setValue(remainingPills, null);
@@ -279,9 +280,9 @@ public class Server {
 
                                             LocalTime time = LocalTime.now();
                                             int hour = time.getHour() - 5;
-                                            System.out.println(hour);
+                                            //System.out.println(hour);
                                             int minute = time.getMinute();
-                                            System.out.println(minute);
+
                                             lastDose += hour + "," + minute;
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/lastDose").setValue(lastDose, null);
 
@@ -295,6 +296,7 @@ public class Server {
 
 
                             //close connection
+                            System.out.println("done.");
                             closeConnection();
                             activeConnection = false;
                         }
