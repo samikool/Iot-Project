@@ -64,8 +64,7 @@ public class ServerAnalyzer implements Runnable{
                         int[] tempIntArray = {Integer.parseInt(tempStringArray[3]), Integer.parseInt(tempStringArray[4])};
                         dateList.add(tempIntArray);
                     }
-
-                    double[] doubles = new double[dateList.size()];
+                    
                     //File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
                     File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
                     int[] times = new int[dateCount];

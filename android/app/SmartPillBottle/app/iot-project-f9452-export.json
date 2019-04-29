@@ -12,9 +12,11 @@
         "ms382ndlsdf9e" : {
           "days" : "all",
           "dosePerDay" : "1",
+          "lastDose" : "19,4,28,13,52",
           "latitude" : "41.659704",
           "longitude" : "-91.536853",
           "name" : "Tylenol",
+          "nextDose" : "19,4,29,14,0",
           "pillsPerDose" : "2",
           "remaining" : "42",
           "taken" : {
@@ -47,15 +49,17 @@
             "26" : "19,4,26,14,01",
             "27" : "19,4,27,13,37",
             "28" : "19,4,28,13,52",
-            "count" : 1
+            "count" : 29
           }
         },
         "n2jd9glo3bhsy" : {
           "days" : "tuesday,thrusday,saturday,sunday",
           "dosePerDay" : "1",
+          "lastDose" : "19,4,29,8,21",
           "latitude" : "41.659214",
           "longitude" : "-91.536877",
           "name" : "Advil PM",
+          "nextDose" : "19,4,30,8,0",
           "pillsPerDose" : "4",
           "remaining" : "34"
         },
