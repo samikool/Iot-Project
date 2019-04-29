@@ -261,10 +261,12 @@ public class Server {
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/temperature").setValue(data[13], null);
 
                                             //get remaining days of doses
-                                            int remainingPills = (int) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remmaining").getValue();
+                                            int remainingPills = (int) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").getValue();
                                             int dosesPerDay = (int) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/dosesPerDay").getValue();
+                                            remainingPills -= dosesPerDay;
                                             int remainingDays = remainingPills/dosesPerDay;
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingDays").setValue(remainingDays, null);
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingPills").setValue(remainingPills, null);
 
                                             //get current time
                                             Calendar today = Calendar.getInstance();
@@ -274,6 +276,8 @@ public class Server {
                                             int minute = time.getMinute();
                                             lastDose += hour + "," + minute;
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/lastDose").setValue(lastDose, null);
+
+                                            //update count
 
                                         }
                                     }

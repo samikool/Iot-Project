@@ -30,10 +30,16 @@ public class Time {
     @Override
     public String toString(){
         if(hour <= 12){
+            if(minute < 10){
+                return hour + ":" + String.format("%01d", minute) + " AM";
+            }
             return hour + ":" + minute + " AM";
         }
         else {
             hour -= 12;
+            if(minute < 10){
+                return hour + ":" + String.format("%01d", minute) + " PM";
+            }
             return hour + ":" + minute + " PM";
         }
     }

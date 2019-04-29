@@ -107,11 +107,17 @@ public class MedicineList extends AppCompatActivity {
                     String latitude = (String) medicine.child("latitude").getValue();
                     String longitude = (String) medicine.child("longitude").getValue();
 
-                    Calendar now = Calendar.getInstance();
-                    Date today = new Date(now.get(Calendar.YEAR), now.get(Calendar.MONTH)+1, now.get(Calendar.DAY_OF_MONTH));
+                    String date = (String) medicine.child("/lastDose").getValue();
+                    String[] dateArray = date.split(",");
+                    Time time = new Time(Integer.parseInt(dateArray[3]), Integer.parseInt(dateArray[4]));
+                    Date lastDose = new Date(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]), time);
 
+                    date = (String) medicine.child("/nextDose").getValue();
+                    dateArray = date.split(",");
+                    time = new Time(Integer.parseInt(dateArray[3]), Integer.parseInt(dateArray[4]));
+                    Date nextDose = new Date(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]), time);
 
-                    medicineArrayList.add(new Medication(localID, medicineUID, name, pillsPerDose, dosePerDay, remaining, latitude, longitude, today, today));
+                    medicineArrayList.add(new Medication(localID, medicineUID, name, pillsPerDose, dosePerDay, remaining, latitude, longitude, lastDose, nextDose));
                 }
                 getMedicineViews();
             }

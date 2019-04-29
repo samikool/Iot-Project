@@ -52,13 +52,9 @@ public class ServerAnalyzer implements Runnable{
 
         //going through users
         for(int i=0; i<usernameKeys.size(); i++){
-            System.out.println(usernameKeys.get(i));
-            System.out.println(bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine").getChildren());
             //going through user medicine
             int currentMedicine = 0;
             for(DataSnapshot medicineSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine").getChildren()) {
-                System.out.println(medicineSnapshot.child("/taken/count").getValue());
-
                 if(!(medicineSnapshot.child("/taken/count").getValue() == null)){
                     int dateCount = Math.toIntExact((long) medicineSnapshot.child("/taken/count").getValue());
 
@@ -127,7 +123,7 @@ public class ServerAnalyzer implements Runnable{
 
             try{
                 System.out.println("Analyzer Sleeping");
-                Thread.sleep(60000);
+                Thread.sleep(500);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
