@@ -55,7 +55,7 @@ public class ServerAnalyzer implements Runnable{
             //going through user medicine
             int currentMedicine = 0;
             for(DataSnapshot medicineSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine").getChildren()) {
-                if(!(medicineSnapshot.child("/taken/count").getValue() == null) || (int) medicineSnapshot.child("/taken/count").getValue() != 0){
+                if(!(medicineSnapshot.child("/taken/count").getValue() == null) && (int) medicineSnapshot.child("/taken/count").getValue() != 0){
                     int dateCount = Math.toIntExact((long) medicineSnapshot.child("/taken/count").getValue());
 
                     for(int j=0; j<dateCount; j++){
