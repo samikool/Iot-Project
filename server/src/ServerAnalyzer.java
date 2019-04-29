@@ -134,6 +134,7 @@ public class ServerAnalyzer implements Runnable{
                        for(int u=0; u<2; u++){
                            String token = (String) tokenSnap.child(String.valueOf(u)).getValue();
                            System.out.println(tokenSnap);
+
                            Message message = Message.builder()
                                    .putData("title", "Two Weeks of Doses Left")
                                    .putData("content", "Medicine" + medicineName + "has two weeks of doeses remaining.")

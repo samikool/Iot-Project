@@ -213,6 +213,12 @@ public class Server {
                                     newToken = false;
                                 }
 
+
+
+
+
+
+
                                 closeConnection();
                                 activeConnection=false;
                             }catch (Exception e){
