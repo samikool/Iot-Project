@@ -17,6 +17,7 @@ public class Server {
     private ConnectionHandler[] connectionHandlers;
     private ExecutorService executor;
     private int clientsConnected;
+    private ServerAnalyzer serverAnalyzer;
     private static DatabaseReference firebaseDatabase;
     private NotificationSender notificationSender;
 
@@ -42,6 +43,7 @@ public class Server {
 
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,512);
+        serverAnalyzer = new ServerAnalyzer();
 
         //linux server
         FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
@@ -57,6 +59,8 @@ public class Server {
 
         FirebaseApp.initializeApp(options);
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+
+        executor.execute(serverAnalyzer);
 
         while(true){
             try{

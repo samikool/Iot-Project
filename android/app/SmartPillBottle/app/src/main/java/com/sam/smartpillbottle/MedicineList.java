@@ -91,7 +91,7 @@ public class MedicineList extends AppCompatActivity {
 
     private void getMedicineFromDatabase(){
 
-        firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.child("/users/" + firebaseUser.getUid() + "/medicine").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int count = 0;
