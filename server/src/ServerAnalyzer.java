@@ -129,7 +129,7 @@ public class ServerAnalyzer implements Runnable{
                     String medicineName = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/name").getValue();
 
                     for(DataSnapshot tokenSnap : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
-                       for(int u=0; u<(int) tokenSnap.child("count").getValue(); u++){
+                       for(int u=0; u<(int) tokenSnap.child("/count").getValue(); u++){
                            String token = (String) tokenSnap.child(String.valueOf(u)).getValue();
                            System.out.println(tokenSnap);
                            Message message = Message.builder()
