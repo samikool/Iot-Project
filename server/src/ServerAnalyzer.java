@@ -133,7 +133,7 @@ public class ServerAnalyzer implements Runnable{
                         System.out.println(tokenSnap.child("/count").getValue());
 
                            String token = (String) tokenSnap.child(String.valueOf(0)).getValue();
-                           System.out.println(tokenSnap);
+                           System.out.println(tokenSnap.child(String.valueOf(0)).getValue());
 
                            Message message = Message.builder()
                                    .putData("title", "Two Weeks of Doses Left")
