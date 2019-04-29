@@ -271,7 +271,7 @@ public class Server {
                                             System.out.println(remainingPills);
                                             String remainingDays = String.valueOf(Math.toIntExact(Integer.valueOf(remainingPills)/(Integer.valueOf(pillsPerDose) * Integer.valueOf(dosesPerDay))));
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingDays").setValue(remainingDays, null);
-                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingPills").setValue(remainingPills, null);
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").setValue(remainingPills, null);
 
                                             //get current time
                                             Calendar today = Calendar.getInstance();
