@@ -239,9 +239,11 @@ public class Server {
                             String combinedData = input.readLine();
                             //System.out.println(combinedData);
                             String[] data = combinedData.split(",");
-                            for(int i=0; i<data.length; i++){
+
+                            /*for(int i=0; i<data.length; i++){
                                 System.out.println(data[i]);
-                            }
+                            }*/
+                            
                             //deal with database
                             //System.out.println(bigSnapshot.child("/claimed/").child(data[12]).getValue());
                             if(!bigSnapshot.child("/claimed/").hasChild(data[12])){
