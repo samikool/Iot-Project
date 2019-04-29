@@ -328,7 +328,6 @@ public class Server {
 
     public static void main(String[] args){
         try{
-            System.out.println(convertLocation("4807.038", "N"));
             Server testServer = new Server("4044");
             testServer.start();
         }catch (Exception e){
@@ -346,11 +345,8 @@ public class Server {
             multiplier = -1;
         }
         String DD = String.valueOf((int) Double.parseDouble(location)/100);
-        System.out.println(DD);
         String MM = String.valueOf((Double.parseDouble(location) - Double.parseDouble(DD)*100));
-        System.out.println(MM);
         MM = String.valueOf(Double.parseDouble(MM)/60);
-        System.out.println(MM);
 
 
 

@@ -1,5 +1,6 @@
 package com.sam.smartpillbottle;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,8 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalTime;
 import java.util.Calendar;
-
+@TargetApi(26)
 public class AddMedicine extends AppCompatActivity {
     private DatabaseReference firebaseDatabase;
     private FirebaseUser firebaseUser;
@@ -45,6 +47,8 @@ public class AddMedicine extends AppCompatActivity {
     private Button addMedicineButton;
     private Medication medication;
     private boolean canAddMedicine;
+    private DataSnapshot bigSnapshot;
+    private volatile boolean dataReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,57 +83,107 @@ public class AddMedicine extends AppCompatActivity {
         addMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get info
-                String medicineUID = medicineUIDBox.getText().toString();
-                String medicineName = (String) medicineNameBox.getText().toString();
-                String dosesPerDay = (String) dosesPerDayBox.getText().toString();
-                String pillsPerDose = (String) pillsPerDoseBox.getText().toString();
-                String remainingPills = (String) currentPillsBox.getText().toString();
-                String days = "";
-                if(everydayCheckbox.isChecked()){
-                    days = "all";
-                }
-                else{
-                    if(mondayCheckbox.isChecked()){
-                        days += "monday,";
-                    }
-                    if(tuesdayCheckbox.isChecked()){
-                        days += "tuesday";
-                    }
-                    if(wednesdayCheckbox.isChecked()){
-                        days += "wednesday";
-                    }
-                    if(thursdayCheckbox.isChecked()){
-                        days += "thrusday";
-                    }
-                    if(fridayCheckbox.isChecked()){
-                        days += "friday";
-                    }
-                    if(saturdayCheckbox.isChecked()){
-                        days += "saturday";
-                    }
-                    if(sundayCheckbox.isChecked()){
-                        days +="sunday";
-                    }
-                }
-
-                Date today = new Date(Calendar.getInstance().get(Calendar.YEAR),
-                        Calendar.getInstance().get(Calendar.MONTH),
-                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-
-                //create medication
-                medication = new Medication(MedicineList.getNextMedicationLocalID(), medicineUID, medicineName,
-                        pillsPerDose, dosesPerDay, remainingPills, "0", "0", today, today);
-
                 firebaseDatabase.child("/claimed/").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if((boolean) dataSnapshot.child(medication.getMedicineUID()).getValue()){
+                        //get info
+                        String medicineUID = medicineUIDBox.getText().toString();
+                        String medicineName = (String) medicineNameBox.getText().toString();
+                        String dosesPerDay = (String) dosesPerDayBox.getText().toString();
+                        String pillsPerDose = (String) pillsPerDoseBox.getText().toString();
+                        String remainingPills = (String) currentPillsBox.getText().toString();
+                        String days = "";
+                        if(everydayCheckbox.isChecked()){
+                            days = "all";
+                        }
+                        else{
+                            if(mondayCheckbox.isChecked()){
+                                days += "monday,";
+                            }
+                            if(tuesdayCheckbox.isChecked()){
+                                days += "tuesday";
+                            }
+                            if(wednesdayCheckbox.isChecked()){
+                                days += "wednesday";
+                            }
+                            if(thursdayCheckbox.isChecked()){
+                                days += "thrusday";
+                            }
+                            if(fridayCheckbox.isChecked()){
+                                days += "friday";
+                            }
+                            if(saturdayCheckbox.isChecked()){
+                                days += "saturday";
+                            }
+                            if(sundayCheckbox.isChecked()){
+                                days +="sunday";
+                            }
+                        }
+
+                        LocalTime time = LocalTime.now();
+                        int hour = time.getHour();
+                        int minute = time.getMinute();
+
+                        Date today = new Date(Calendar.getInstance().get(Calendar.YEAR),
+                                Calendar.getInstance().get(Calendar.MONTH),
+                                Calendar.getInstance().get(Calendar.DAY_OF_MONTH), new Time(hour, minute));
+
+                        //create medication
+                        medication = new Medication(MedicineList.getNextMedicationLocalID(), medicineUID, medicineName,
+                                pillsPerDose, dosesPerDay, remainingPills, "0", "0", today, today);
+
+
+                        System.out.println("In database");
+                        bigSnapshot = dataSnapshot;
+
+                        System.out.println((boolean) bigSnapshot.child(medication.getMedicineUID()).getValue());
+                        if((boolean) bigSnapshot.child(medication.getMedicineUID()).getValue()){
                             canAddMedicine = false;
                         }else{
                             canAddMedicine = true;
                         }
+
+                        //write to database
+                        System.out.println(canAddMedicine);
+                        if(canAddMedicine){
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/name").setValue(medicineName);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/dosesPerDay").setValue(dosesPerDay);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/pillsPerDose").setValue(pillsPerDose);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/remaining").setValue(remainingPills);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/latitude").setValue("0");
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/longitude").setValue("0");
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/days").setValue(days);
+
+                            String dateString = String.valueOf(today.getYear()).substring(2) + "," + today.getMonth() + "," + today.getDay() + ","
+                                    + today.getTime().getHour() + "," + today.getTime().getMinute();
+
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/lastDose").setValue(dateString);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/nextDose").setValue(dateString);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/taken/count").setValue(0);
+                            firebaseDatabase.child("claimed/").child(medicineUID).setValue(true);
+
+                            Snackbar.make(findViewById(R.id.addMedicineLayout), "Success: Medicine added", Snackbar.LENGTH_LONG);
+                            finish();
+                        }else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AddMedicine.this)
+                                    .setMessage("Failed: Medicine UID already registered\n Please try again.")
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    })
+                                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            System.exit(0);
+                                        }
+                                    });
+                            builder.show();
+                        }
+
                     }
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -137,41 +191,7 @@ public class AddMedicine extends AppCompatActivity {
                     }
                 });
 
-                try{
-                    Thread.sleep(100);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
 
-
-                //write to database
-                if(canAddMedicine){
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/name").setValue(medicineName);
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/dosesPerDay").setValue(dosesPerDay);
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/pillsPerDose").setValue(pillsPerDose);
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/remaining").setValue(medicineName);
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/latitude").setValue("0");
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/longitude").setValue("0");
-                    firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/days").setValue(days);
-                    Snackbar.make(findViewById(R.id.medicineListContainer), "Success: Medicine added", Snackbar.LENGTH_LONG);
-                    finish();
-                }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AddMedicine.this)
-                            .setMessage("Failed: Medicine UID already registered\n Please try again.")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                            .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    System.exit(0);
-                                }
-                            });
-                    builder.show();
-                }
             }
         });
 

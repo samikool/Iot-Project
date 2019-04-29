@@ -64,7 +64,7 @@ public class ServerAnalyzer implements Runnable{
                         int[] tempIntArray = {Integer.parseInt(tempStringArray[3]), Integer.parseInt(tempStringArray[4])};
                         dateList.add(tempIntArray);
                     }
-                    
+
                     //File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
                     File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
                     int[] times = new int[dateCount];
@@ -72,7 +72,11 @@ public class ServerAnalyzer implements Runnable{
                         times[k] = MachineLearning.knearest(trainingData,  dateList.get(k), 2);
                     }
 
-                    int max = maxRepeating(times, times.length, 23);
+                    int max = 1;
+                    if(times.length > 0){
+                        max = maxRepeating(times, times.length, 23);
+                    }
+
                     System.out.println("User: " + usernameKeys.get(i));
                     System.out.println("Medicine: " + medicineSnapshot.getKey());
                     System.out.println("Class: " + max);
@@ -126,6 +130,7 @@ public class ServerAnalyzer implements Runnable{
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
+            dataReady = false;
         }
 
     }
