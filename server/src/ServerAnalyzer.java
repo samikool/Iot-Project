@@ -86,8 +86,6 @@ public class ServerAnalyzer implements Runnable{
                     String nextDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose").getValue();
                     String[] lastDoseData = lastDose.split(",");
                     String[] nextDoseData = nextDose.split(",");
-                    System.out.println("nextDoseData[2]: " + nextDoseData[2]);
-                    System.out.println("lastDoseData[2]: " + lastDoseData[2]);
                     if(lastDoseData[2].equals(nextDoseData[2])){
                         nextDose = "";
                         for(int z=0; z<nextDoseData.length; z++){
@@ -105,9 +103,9 @@ public class ServerAnalyzer implements Runnable{
                         int hour = max;
                         int minute = 0;
                         nextDose += hour + "," + minute;
-                        firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose")
-                                .setValue(nextDose, null);
                     }
+                    firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child(medicineSnapshot.getKey()).child("/nextDose")
+                            .setValue(nextDose, null);
 
 
                 }else{
