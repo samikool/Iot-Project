@@ -5,9 +5,11 @@ import com.google.firebase.database.*;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -46,11 +48,11 @@ public class Server {
         serverAnalyzer = new ServerAnalyzer();
 
         //linux server
-        FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //computer at home
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //laptop
-        //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -90,6 +92,7 @@ public class Server {
         private String token;
         private String tokenCount;
         private boolean newToken;
+        private DataSnapshot bigSnapshot;
 
         public ConnectionHandler(int id){
             clientID = id;
@@ -132,6 +135,17 @@ public class Server {
         public void processConnection(){
             int secondsActive = 0;
             while (activeConnection){
+                FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        bigSnapshot = dataSnapshot;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 try{
                     String type = input.readLine(); //these were all changed from readObject (String) to this
                     System.out.println(type);
@@ -226,6 +240,26 @@ public class Server {
                                 System.out.println(data[i]);
                             }
                             //deal with database
+                            if(!bigSnapshot.child("/claimed/").hasChild(data[12])){
+                                firebaseDatabase.child("/claimed/").child(data[12]).setValue(false, null);
+                            }
+                            else if((boolean) bigSnapshot.child("/claimed/").child(data[12]).getValue()){
+                                for(DataSnapshot users : bigSnapshot.child("/users/").getChildren()){
+                                    for(DataSnapshot medicine: users.child("/medicine/").getChildren()){
+                                        if(medicine.getKey() == data[12]){
+                                            String latitude = convertLocation(data[3], data[4]).substring(0, 8);
+                                            String longitude = convertLocation(data[3], data[4].substring(0, 8));
+                                            firebaseDatabase.child(users.getKey() + "/" + medicine.getKey() + "/latitude").setValue(latitude, null);
+                                            firebaseDatabase.child(users.getKey() + "/" + medicine.getKey() + "/longitude").setValue(longitude, null);
+                                            firebaseDatabase.child(users.getKey() + "/" + medicine.getKey() + "/temperature").setValue(data[13], null);
+                                            Calendar today = Calendar.getInstance();
+                                            String todayString = today.get(Calendar.YEAR) + "" + today.get(Calendar.MONTH);
+                                        }
+                                    }
+                                }
+                            }
+
+
 
                             //close connection
                             closeConnection();
@@ -269,11 +303,39 @@ public class Server {
 
     public static void main(String[] args){
         try{
+            System.out.println(convertLocation("4807.038", "N"));
             Server testServer = new Server("4044");
             testServer.start();
         }catch (Exception e){
             System.err.println(e);
         }
+    }
+
+    public static String convertLocation(String location, String d){
+        String coordinate;
+        int multiplier = 0;
+        if(d.equals("N") || d.equals("E")){
+            multiplier = 1;
+        }
+        else if(d.equals("S") || d.equals("W")){
+            multiplier = -1;
+        }
+        String DD = String.valueOf((int) Double.parseDouble(location)/100);
+        System.out.println(DD);
+        String MM = String.valueOf((Double.parseDouble(location) - Double.parseDouble(DD)*100));
+        System.out.println(MM);
+        MM = String.valueOf(Double.parseDouble(MM)/60);
+        System.out.println(MM);
+
+
+
+        coordinate = String.valueOf(Double.parseDouble(DD) + Double.parseDouble(MM));
+
+
+        return coordinate;
+    }
+    public static void main(){
+
     }
 }
 

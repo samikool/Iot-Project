@@ -38,14 +38,14 @@ public class MachineLearning {
      * @param arrayTwo arrayTwo represents the second data point
      * @return a double of the distance between the two data points.
      */
-    public static double euclideanDistance(double arrayOne[], double arrayTwo[]){
-        double result=0 ;
+    public static int euclideanDistance(int arrayOne[], int arrayTwo[]){
+        int result=0 ;
         if(arrayOne.length == arrayTwo.length){
             for(int i=0;i<arrayOne.length;i++){
                 result += Math.pow(arrayOne[i] - arrayTwo[i],2);
             }
         }
-        result = Math.sqrt(result);
+        result = (int) Math.sqrt(result);
 
         //This math just rounds result to the nearest 10,000
         result *= 10000;
@@ -85,7 +85,7 @@ public class MachineLearning {
      * @param dataPoint dataPoint is the data point that you want to classify. (must be same dimension as trainingData points.
      * @param k is the number number of neighbors to use to calculate the class the point belongs to
      */
-    public static void knearest(File trainingData,double dataPoint[],int k){
+    public static int knearest(File trainingData, int dataPoint[],int k){
         ArrayList<String[]> tempDataList = new ArrayList<String[]>(); //temporary list to hold data from file
         int numOfDataPoints = 0;//holds number of points
         int numOfDimensions = 0;//holds number of dimensions of data
@@ -106,11 +106,14 @@ public class MachineLearning {
             System.out.println(e);
         }
 
+        //custom code
+        numOfDataPoints = tempDataList.size();
+
         //Now that the program knows dimensions and number of points
         //the arrays to hold data can be initialized
         int[] fileClassData = new int[numOfDataPoints];                         //array to hold what class each data point is in
-        double[][] fileNumData = new double[numOfDataPoints][numOfDimensions];  //array hold the actual data points
-        double[] distance = new double[numOfDataPoints];                        //array to hold distance calculations
+        int[][] fileNumData = new int[numOfDataPoints][numOfDimensions];  //array hold the actual data points
+        int[] distance = new int[numOfDataPoints];                        //array to hold distance calculations
         int[] distanceIndex = new int[k];                                       //array to hold indexes of distances closest to passed in data point
 
 
@@ -119,17 +122,26 @@ public class MachineLearning {
         //parse doubles stored as a string in the calculations
         for(int i=0; i<numOfDataPoints; i++){
             for(int j=0; j<numOfDimensions; j++){
-                fileNumData[i][j] = Double.parseDouble(tempDataList.get(i)[j]);
+                fileNumData[i][j] = Integer.parseInt(tempDataList.get(i)[j]);
             }
         }
         //Loops gathers class data from the tempDataList
         for(int i=0; i<numOfDataPoints; i++){
-            if(tempDataList.get(i)[numOfDimensions].equalsIgnoreCase("\"class1\"")){
+
+            if(tempDataList.get(i)[numOfDimensions].length() == 6){
+                fileClassData[i] = tempDataList.get(i)[numOfDimensions].charAt(5)-48;
+            }else{
+                String temp = tempDataList.get(i)[numOfDimensions].substring(5);
+                fileClassData[i] = Integer.parseInt(temp);
+            }
+
+
+            /*if(tempDataList.get(i)[numOfDimensions].equalsIgnoreCase("class1")){
                 fileClassData[i] = 1;
             }
-            else if(tempDataList.get(i)[numOfDimensions].equalsIgnoreCase("\"class2\"")){
+            else if(tempDataList.get(i)[numOfDimensions].equalsIgnoreCase("class2")){
                 fileClassData[i] = 2;
-            }
+            }*/
         }
 
         //Distances are calculated using the euclideanDistance method
@@ -143,8 +155,8 @@ public class MachineLearning {
         //The indexes are then stored in distanceIndex so the program can later find what class they belong to
         for(int i=0; i<k; i++){
             int indexOfMin = 0;
-            double min = distance[0];
-            double max = distance[0];
+            int min = distance[0];
+            int max = distance[0];
             for(int j=0; j<numOfDataPoints; j++){
                 if(distance[j] < min){
                     min = distance[j];
@@ -158,26 +170,73 @@ public class MachineLearning {
             distanceIndex[i] = indexOfMin;
         }
 
-        int class1Count=0;
+        int class0Count=0;
         int class2Count=0;
+        int class4Count=0;
+        int class6Count=0;
+        int class8Count=0;
+        int class10Count=0;
+        int class12Count=0;
+        int class14Count=0;
+        int class16Count=0;
+        int class18Count=0;
+        int class20Count=0;
+        int class22Count=0;
 
         //This loop uses the distanceIndexes to find what the k nearest data point's classes are so it can assign the new point
         for(int i=0; i<k; i++){
-            if(fileClassData[distanceIndex[i]] == 1){
-                class1Count++;
+            if(fileClassData[distanceIndex[i]] == 0){
+                class0Count++;
             }
             else if(fileClassData[distanceIndex[i]] == 2){
                 class2Count++;
             }
+            else if(fileClassData[distanceIndex[i]] == 4){
+                class4Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 6){
+                class6Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 8){
+                class8Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 10){
+                class10Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 12){
+                class12Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 14){
+                class14Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 16){
+                class16Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 18){
+                class18Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 20){
+                class20Count++;
+            }
+            else if(fileClassData[distanceIndex[i]] == 22){
+                class22Count++;
+            }
+
         }
 
-        //Results are printed to the console.
-        if(class1Count > class2Count){
-            System.out.println("New data point belongs to class1");
+        int[] count = new int[] {class0Count, class2Count, class4Count, class6Count, class8Count, class10Count,
+                class12Count, class14Count, class16Count, class18Count, class20Count, class22Count};
+        int max = class0Count;
+        int index = 0;
+        for(int i=1; i<12; i++){
+            if(count[i-1] < count[i]){
+                max = count[i];
+                index = i;
+            }
         }
-        else if(class1Count < class2Count){
-            System.out.println("New data point belongs to class2");
-        }
+        System.out.println("Class " + index*2);
+        return index*2;
+
     }
 
     /**
@@ -225,23 +284,23 @@ public class MachineLearning {
         }
 
         //Now that number of data points, number of dimensions, and number of clusters,k, are all known we can initialize the Arrays for the algorithm
-        double[][] dataArray = new double[numOfDataPoints][numOfDimensions];    //Array to hold the data
-        double[][] centroid = new double[k][numOfDimensions];                   //Array to hold centroid values (means of clusters)
-        double[][] previousCentroid = new double[k][numOfDimensions];           //Array to hold previous centroid values
-        double[][] distanceOfCluster = new double[k][numOfDataPoints];          //Array to hold distances of data points to centroid
+        int[][] dataArray = new int[numOfDataPoints][numOfDimensions];    //Array to hold the data
+        int[][] centroid = new int[k][numOfDimensions];                   //Array to hold centroid values (means of clusters)
+        int[][] previousCentroid = new int[k][numOfDimensions];           //Array to hold previous centroid values
+        int[][] distanceOfCluster = new int[k][numOfDataPoints];          //Array to hold distances of data points to centroid
         int[] clusterAssignmentIndex = new int[numOfDataPoints];                //Array to hold the index of the cluster that the data points will be assigned to
-        ArrayList<ArrayList<double[]>> cluster = new ArrayList<>();             //ArrayList to hold the clusters which are ArrayLists
+        ArrayList<ArrayList<int[]>> cluster = new ArrayList<>();             //ArrayList to hold the clusters which are ArrayLists
 
         //this loop initializes dataArray so the program doesn't have to parseDoubles every time to get at the data
         for(int i=0; i<numOfDataPoints; i++){
             for(int j=0; j<numOfDimensions; j++){
-                dataArray[i][j] = Double.parseDouble(tempDataList.get(i)[j]);
+                dataArray[i][j] = Integer.parseInt(tempDataList.get(i)[j]);
             }
         }
 
         //this loop initializes cluster with the correct amount of clusters(which are ArrayLists that hold a double[]), k=number of clusters
         for(int i=0; i<k; i++){
-            cluster.add(new ArrayList<double[]>());
+            cluster.add(new ArrayList<int[]>());
         }
 
         //initialize k numbers to start as means for centroids of clusters
@@ -274,7 +333,7 @@ public class MachineLearning {
             //so later data point at dataArray[i] should be assigned to cluster[clusterAssignmentIndex[i]]
             for(int i=0; i<numOfDataPoints; i++){
                 int indexOfMin = 0;
-                double min = distanceOfCluster[0][i];
+                int min = distanceOfCluster[0][i];
                 for(int j=0; j<k; j++){
                     if(distanceOfCluster[j][i] < min){
                         min = distanceOfCluster[j][i];
@@ -314,7 +373,7 @@ public class MachineLearning {
             //then repeating this process for the total number of dimensions the data has
             //i = number of the cluster, k, j = the dimension, and c = the data point in cluster[i]
             for(int i=0; i<k; i++){
-                double total;
+                int total;
                 if(cluster.get(i).size() > 0){
                     for(int j=0; j<numOfDimensions; j++){
                         total = 0;
@@ -376,7 +435,7 @@ public class MachineLearning {
      * @param arrayTwo the second 2d array to compare.
      * @return boolean that is true if every if every element in both arrays are equal.
      */
-    private static boolean arrayEquals (double[][] arrayOne, double[][] arrayTwo){
+    private static boolean arrayEquals (int[][] arrayOne, int[][] arrayTwo){
         if(arrayOne.length != arrayTwo.length){
             return false;
         }
