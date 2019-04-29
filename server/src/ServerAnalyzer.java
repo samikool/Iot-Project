@@ -86,14 +86,22 @@ public class ServerAnalyzer implements Runnable{
                     String nextDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose").getValue();
                     String[] lastDoseData = lastDose.split(",");
                     String[] nextDoseData = nextDose.split(",");
+                    int hour = max;
+                    int minute = 0;
                     if(lastDoseData[2].equals(nextDoseData[2])){
                         nextDose = "";
                         for(int z=0; z<nextDoseData.length; z++){
                             if(z == 2){
                                 nextDose += String.valueOf(Integer.valueOf(nextDoseData[z]) + 1);
-                            }else{
+                            }
+                            else if(z == 3){
+                                nextDose += max;
+                            }
+                            else{
                                 nextDose += nextDoseData[z];
                             }
+
+
 
                             if(z != nextDoseData.length-1){
                                 nextDose += ",";
@@ -101,10 +109,9 @@ public class ServerAnalyzer implements Runnable{
                         }
                     }else{
                         Calendar today = Calendar.getInstance();
-                        nextDose = today.get(Calendar.YEAR) + "," + today.get(Calendar.MONTH) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
+                        String year = String.valueOf(today.get(Calendar.YEAR));
+                        nextDose = year.substring(2) + "," + (today.get(Calendar.MONTH)+1) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
                         LocalTime time = LocalTime.now();
-                        int hour = max;
-                        int minute = 0;
                         nextDose += hour + "," + minute;
                     }
                     firebaseDatabase.child("/users/" + (String) usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose")
