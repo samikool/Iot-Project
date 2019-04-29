@@ -274,7 +274,7 @@ public class Server {
                                             String lastDose = today.get(Calendar.YEAR) + "," + (today.get(Calendar.MONTH)+1) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
 
                                             LocalTime time = LocalTime.now();
-                                            int hour = time.getHour();
+                                            int hour = time.getHour() - 5;
                                             System.out.println(hour);
                                             int minute = time.getMinute();
                                             System.out.println(minute);
