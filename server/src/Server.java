@@ -271,10 +271,13 @@ public class Server {
 
                                             //get current time
                                             Calendar today = Calendar.getInstance();
-                                            String lastDose = today.get(Calendar.YEAR) + "," + today.get(Calendar.MONTH) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
+                                            String lastDose = today.get(Calendar.YEAR) + "," + (today.get(Calendar.MONTH)+1) + "," + today.get(Calendar.DAY_OF_MONTH) + ",";
+
                                             LocalTime time = LocalTime.now();
                                             int hour = time.getHour();
+                                            System.out.println(hour);
                                             int minute = time.getMinute();
+                                            System.out.println(minute);
                                             lastDose += hour + "," + minute;
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/lastDose").setValue(lastDose, null);
 
