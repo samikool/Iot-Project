@@ -125,7 +125,7 @@ public class AddMedicine extends AppCompatActivity {
                         int minute = time.getMinute();
 
                         Date today = new Date(Calendar.getInstance().get(Calendar.YEAR),
-                                Calendar.getInstance().get(Calendar.MONTH),
+                                Calendar.getInstance().get(Calendar.MONTH)+1,
                                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH), new Time(hour, minute));
 
                         //create medication

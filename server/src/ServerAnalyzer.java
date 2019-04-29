@@ -100,8 +100,6 @@ public class ServerAnalyzer implements Runnable{
                                 nextDose += nextDoseData[z];
                             }
 
-
-
                             if(z != nextDoseData.length-1){
                                 nextDose += ",";
                             }
