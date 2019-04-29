@@ -254,9 +254,9 @@ public class Server {
                                             String latitude = convertLocation(data[3], data[4]);
                                             String longitude = convertLocation(data[3], data[4]);
                                             System.out.println("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude");
-                                            firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude").setValue(latitude, null);
-                                            firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/longitude").setValue(longitude, null);
-                                            firebaseDatabase.child("/users/" + users.getKey() + "/" + medicine.getKey() + "/temperature").setValue(data[13], null);
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/latitude").setValue(latitude, null);
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/longitude").setValue(longitude, null);
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/temperature").setValue(data[13], null);
                                             Calendar today = Calendar.getInstance();
                                             String todayString = today.get(Calendar.YEAR) + "" + today.get(Calendar.MONTH);
                                         }
