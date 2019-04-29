@@ -2,6 +2,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
 import com.sun.deploy.util.ArrayUtil;
 
 import java.io.File;
@@ -17,6 +19,7 @@ public class ServerAnalyzer implements Runnable{
     private ArrayList<int[]> dateList;
     private int clusters;
     private volatile boolean dataReady;
+    private boolean sent = false;
 
     @Override
     public void run() {
@@ -116,6 +119,31 @@ public class ServerAnalyzer implements Runnable{
 
 
                 }else{
+
+                }
+
+                if(!sent && (long) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue() < 15){
+                    String medicineName = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/name").getValue();
+
+                    for(DataSnapshot tokenSnap : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
+                        String token = tokenSnap.getKey();
+                        System.out.println(tokenSnap);
+                        Message message = Message.builder()
+                                .putData("title", "Two Weeks of Doses Left")
+                                .putData("content", "Medicine" + medicineName + "has two weeks of doeses remaining.")
+                                .setToken(token)
+                                .build();
+
+                        try{
+                            String response = FirebaseMessaging.getInstance().send(message);
+                            System.out.println("User Notified" + response);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+
 
                 }
             }

@@ -213,20 +213,6 @@ public class Server {
                                     newToken = false;
                                 }
 
-
-
-
-
-
-                                Message message = Message.builder()
-                                        .putData("title", "UserID: " + userID)
-                                        .putData("content", "Token: " + token)
-                                        .setToken(token)
-                                        .build();
-
-                                String response = FirebaseMessaging.getInstance().send(message);
-                                System.out.println("Successfully sent message: " + response);
-                                System.out.println("closing connection with client: " + clientID);
                                 closeConnection();
                                 activeConnection=false;
                             }catch (Exception e){
