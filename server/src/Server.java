@@ -261,11 +261,10 @@ public class Server {
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/temperature").setValue(data[13], null);
 
                                             //get remaining days of doses
-                                            long remainingPills = (long) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").getValue();
-                                            long dosesPerDay = (long) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/dosesPerDay").getValue();
-                                            remainingPills -= dosesPerDay;
-                                            System.out.println(remainingPills);
-                                            long remainingDays = Math.toIntExact(remainingPills/dosesPerDay);
+                                            String remainingPills = (String) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remaining").getValue();
+                                            String dosesPerDay = (String) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/dosesPerDay").getValue();
+                                            remainingPills = String.valueOf(Integer.valueOf(remainingPills) - Integer.valueOf(dosesPerDay));
+                                            String remainingDays = String.valueOf(Math.toIntExact(Integer.valueOf(remainingPills)/Integer.valueOf(dosesPerDay)));
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingDays").setValue(remainingDays, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/remainingPills").setValue(remainingPills, null);
 
