@@ -122,6 +122,7 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
+                /*
                 String remainingDays = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue();
 
                 System.out.println(remainingDays);
@@ -151,7 +152,7 @@ public class ServerAnalyzer implements Runnable{
                            }
                        }
                     }
-                }
+                }*/
             }
         }
 
