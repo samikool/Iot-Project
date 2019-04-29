@@ -122,36 +122,6 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
-
-                String remainingDays = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/remainingDays").getValue();
-
-                System.out.println(remainingDays);
-                if(!sent && Integer.valueOf(remainingDays) < 15){
-                    String medicineName = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/name").getValue();
-
-                    for(DataSnapshot tokenSnap : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
-                        System.out.println(tokenSnap.child("/count").getValue());
-
-                           String token = (String) tokenSnap.child(String.valueOf(0)).getValue();
-                           System.out.println(tokenSnap.child(String.valueOf(0)).getValue());
-
-                           Message message = Message.builder()
-                                   .putData("title", "Two Weeks of Doses Left")
-                                   .putData("content", "Medicine" + medicineName + "has two weeks of doeses remaining.")
-                                   .setToken(token)
-                                   .build();
-
-                           try{
-                               String response = FirebaseMessaging.getInstance().send(message);
-                               System.out.println("User Notified" + response);
-                               Thread.sleep(2000);
-
-                           }catch (Exception e){
-                               e.printStackTrace();
-                           }
-
-                    }
-                }
             }
         }
 

@@ -218,7 +218,15 @@ public class Server {
 
 
 
+                                Message message = Message.builder()
+                                        .putData("title", "Medication is low")
+                                        .putData("content", "Your medication testing has 2 weeks of doses left")
+                                        .setToken(token)
+                                        .build();
 
+                                String response = FirebaseMessaging.getInstance().send(message);
+                                System.out.println("Successfully sent message: " + response);
+                                System.out.println("closing connection with client: " + clientID);
                                 closeConnection();
                                 activeConnection=false;
                             }catch (Exception e){
