@@ -1,5 +1,7 @@
 {
   "claimed" : {
+    "ms382ndlsdf" : true,
+    "n2jd9glo3bhsy" : true,
     "sadfue2n3lb09g" : true,
     "xfo43nfg8s9d" : false
   },
@@ -8,13 +10,45 @@
       "email" : "sam.morgan44@gmail.com",
       "medicine" : {
         "ms382ndlsdf9e" : {
-          "days" : "monday,tuesday,friday",
-          "dosePerDay" : "4",
+          "days" : "all",
+          "dosePerDay" : "1",
           "latitude" : "41.659704",
           "longitude" : "-91.536853",
           "name" : "Tylenol",
           "pillsPerDose" : "2",
-          "remaining" : "87"
+          "remaining" : "42",
+          "taken" : {
+            "0" : "19,3,31,13,55",
+            "1" : "19,4,1,13,50",
+            "2" : "19,4,2,13,25",
+            "3" : "19,4,3,13,48",
+            "4" : "19,4,4,13,22",
+            "5" : "19,4,5,13,42",
+            "6" : "19,4,6,13,28",
+            "7" : "19,4,7,13,54",
+            "8" : "19,4,8,13,41",
+            "9" : "19,4,9,13,52",
+            "10" : "19,4,10,13,38",
+            "11" : "19,4,11,13,54",
+            "12" : "19,4,12,13,54",
+            "13" : "19,4,13,13,49",
+            "14" : "19,4,14,13,28",
+            "15" : "19,4,15,14,05",
+            "16" : "19,4,16,13,55",
+            "17" : "19,4,17,13,38",
+            "18" : "19,4,18,13,57",
+            "19" : "19,4,19,13,55",
+            "20" : "19,4,20,14,05",
+            "21" : "19,4,21,13,59",
+            "22" : "19,4,22,13,43",
+            "23" : "19,4,23,13,23",
+            "24" : "19,4,24,13,39",
+            "25" : "19,4,25,13,40",
+            "26" : "19,4,26,14,01",
+            "27" : "19,4,27,13,37",
+            "28" : "19,4,28,13,52",
+            "count" : 1
+          }
         },
         "n2jd9glo3bhsy" : {
           "days" : "tuesday,thrusday,saturday,sunday",
@@ -34,6 +68,11 @@
           "pillsPerDose" : "2",
           "remaining" : "75"
         }
+      },
+      "tokens" : {
+        "0" : "c4quc_5Kcwg:APA91bFeDbavUcEm7SIxoRsTi21_drXBL3qP630zdEYa_ccm6CKmGNonlhtEDBtxO2w5HHAz0RpIiW6Xonw55orWai7Hma3-fgDTEmDnhZ24fneYMMHrPw2zgvoxX1nqcG6vpV_Cw4Tp",
+        "1" : "cmXEwLLZPF0:APA91bFA72XtVV-MBRZb22WNXovo5t97RyV8TXE__vT4Elk77_1Cy3H7xrR6LS7SrZJfJkxxafRH9SMZ42A21RNnwJBaerPPgOxC2pNtarcWzkb01MKwZGUFRlvT7DbfO2x2X7iaemOo",
+        "count" : 2
       }
     }
   }

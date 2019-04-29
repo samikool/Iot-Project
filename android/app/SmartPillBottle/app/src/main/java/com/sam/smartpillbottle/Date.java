@@ -31,6 +31,7 @@ public class Date {
      * {@link #monthToString()} on a current {@link Date} object or statically by {@link #monthToString(int)} to provide
      * the user with a month as a String instead of an integer.
      */
+    private Time time;
     private static String[] monthStrings = {"January","February","March","April","May","June","July","August","September","October","November","December"};
     /**
      * No argument constructor will initialize the date to January 1st, 1.
@@ -78,7 +79,22 @@ public class Date {
        this.year = year;
        this.month = month;
        this.day = day;
+       this.time = new Time(0,0);
        isValid();
+    }
+
+    public Date(int year, int month, int day, Time time){
+        this(year, month, day);
+        this.time = time;
+
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     /**
@@ -229,7 +245,7 @@ public class Date {
      */
     @Override
     public String toString(){
-        return this.monthToString() + " " + this.getDay() + ", " + this.getYear();
+        return this.monthToString() + " " + this.getDay() + ", " + this.getYear() + " " + this.getTime().toString();
     }
 
 }

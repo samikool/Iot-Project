@@ -17,16 +17,21 @@ public class Server {
     private ConnectionHandler[] connectionHandlers;
     private ExecutorService executor;
     private int clientsConnected;
-    private DatabaseReference firebaseDatabase;
+    private static DatabaseReference firebaseDatabase;
     private NotificationSender notificationSender;
 
     //main constructor actually used
     //TODO: error checking
     public Server(int port){
-        this.connectionHandlers = new ConnectionHandler[100];
+        this.connectionHandlers = new ConnectionHandler[512];
         this.executor = Executors.newCachedThreadPool();
         this.clientsConnected = 0;
         this.port = port;
+    }
+
+
+    public static DatabaseReference getFirebaseDatabase() {
+        return firebaseDatabase;
     }
 
     //constructor to catch strings as input for port
@@ -36,7 +41,7 @@ public class Server {
     }
 
     public void start() throws IOException{
-        serverSocket = new ServerSocket(port,100);
+        serverSocket = new ServerSocket(port,512);
 
         //linux server
         FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
