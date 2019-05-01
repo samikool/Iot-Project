@@ -200,19 +200,6 @@ public class Server {
                                     newToken = false;
                                 }
 
-
-
-
-
-
-                                Message message = Message.builder()
-                                        .putData("title", "Medication is low")
-                                        .putData("content", "Your medication testing has 2 weeks of doses left")
-                                        .setToken(token)
-                                        .build();
-
-                                String response = FirebaseMessaging.getInstance().send(message);
-                                System.out.println("Successfully sent message: " + response);
                                 System.out.println("closing connection with client: " + clientID);
                                 closeConnection();
                                 activeConnection=false;
@@ -275,6 +262,11 @@ public class Server {
 
                                             lastDose += hour + "," + minute;
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/lastDose").setValue(lastDose, null);
+
+                                            long takenCount = (long) bigSnapshot.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/taken/count").getValue();
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/taken/" + takenCount).setValue(lastDose, null);
+                                            takenCount++;
+                                            firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/taken/count").setValue(takenCount, null);
 
                                             //update count
 
