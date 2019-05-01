@@ -6,10 +6,12 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.sun.deploy.util.ArrayUtil;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
 
 public class ServerAnalyzer implements Runnable{
     private static DatabaseReference firebaseDatabase;
@@ -20,10 +22,11 @@ public class ServerAnalyzer implements Runnable{
     private int clusters;
     private volatile boolean dataReady;
     private boolean sent = false;
+    private static ExecutorService executor;
 
     @Override
     public void run() {
-
+        executor = Server.getExecutor();
         usernameKeys = new ArrayList<String>(128);
         medicineSnapshotList = new ArrayList<String>(256);
         dateList = new ArrayList<int[]>(256);
@@ -68,8 +71,8 @@ public class ServerAnalyzer implements Runnable{
                         dateList.add(tempIntArray);
                     }
 
-                    //File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
-                    File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
+                    File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
+                    //File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
                     int[] times = new int[dateCount];
                     for(int k=0; k<dateCount; k++){
                         times[k] = MachineLearning.knearest(trainingData,  dateList.get(k), 2);
@@ -79,10 +82,6 @@ public class ServerAnalyzer implements Runnable{
                     if(times.length > 0){
                         max = maxRepeating(times, times.length, 23);
                     }
-
-                    //System.out.println("User: " + usernameKeys.get(i));
-                    //System.out.println("Medicine: " + medicineSnapshot.getKey());
-                    //System.out.println("Class: " + max);
 
                     String lastDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/lastDose").getValue();
                     String nextDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/nextDose").getValue();
@@ -122,12 +121,26 @@ public class ServerAnalyzer implements Runnable{
 
                 }
 
+                String daysRemaining = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/remainingDays").getValue();
+
+                if(Integer.parseInt(daysRemaining) < 15){
+                    for(DataSnapshot tokenSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
+                        if(!tokenSnapshot.getKey().equals("count")){
+                            String token = (String) tokenSnapshot.getValue();
+                            String title = "Medicine Running Low!";
+                            String medicine = (String) medicineSnapshot.child("/name").getValue();
+                            String message = "Your medicine " + medicineSnapshot.child("/name").getValue() + " is running low. You may want to get a refill soon.";
+
+                            NotificationSender notificationSender = new NotificationSender(token, title, medicine, message);
+                            executor.execute(notificationSender);
+                        }
+                    }
+                }
             }
         }
 
             try{
-                //System.out.println("Analyzer Sleeping");
-                Thread.sleep(500);
+                Thread.sleep(5000);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }

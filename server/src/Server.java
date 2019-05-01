@@ -19,7 +19,7 @@ public class Server {
     private int port;
     private ServerSocket serverSocket;
     private ConnectionHandler[] connectionHandlers;
-    private ExecutorService executor;
+    private static ExecutorService executor;
     private int clientsConnected;
     private ServerAnalyzer serverAnalyzer;
     private static DatabaseReference firebaseDatabase;
@@ -39,6 +39,8 @@ public class Server {
         return firebaseDatabase;
     }
 
+    public static ExecutorService getExecutor(){return executor;}
+
     //constructor to catch strings as input for port
     //TODO: error checking
     public Server(String port) {
@@ -50,11 +52,11 @@ public class Server {
         serverAnalyzer = new ServerAnalyzer();
 
         //linux server
-        FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        //FileInputStream serviceAccount = new FileInputStream("/home/sam/IoT-Project/server/output/jar/iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //computer at home
         //FileInputStream serviceAccount = new FileInputStream("D:\\git\\IoT-Project\\Server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
         //laptop
-        //FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
+        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\iot-project-f9452-firebase-adminsdk-g3x98-15166cb812.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -108,21 +110,6 @@ public class Server {
         }
 
         public void initializeBuffers(){
-            /*try{
-                //get input buffer initialized
-                input = new ObjectInputStream(clientSocket.getInputStream());
-
-                //get output buffer initialized
-                output = new ObjectOutputStream(clientSocket.getOutputStream());
-                output.flush();
-                System.out.println("Buffers successfully initialized");
-            }catch (IOException e){
-                System.err.println("Error initializing buffers...");
-                System.err.println(e);
-                e.printStackTrace();
-                activeConnection = false;
-            }*/
-
             try{
                 output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 output.flush();

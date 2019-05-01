@@ -1,6 +1,8 @@
 package com.sam.smartpillbottle;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -65,11 +67,24 @@ public class MedicineDetail extends FragmentActivity implements OnMapReadyCallba
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog confirm = new Dialog(MedicineDetail.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MedicineDetail.this)
+                        .setMessage("Failed: Medicine UID already registered\n Please try again.")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                firebaseDatabase.child("users/" + firebaseUser.getUid() +"/medicine/" + medication.getMedicineUID()).removeValue();
+                                firebaseDatabase.child("claimed/").child(medication.getMedicineUID()).removeValue();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                confirm.show();
-                firebaseDatabase.child("users/" + firebaseUser.getUid() +"/medicine/" + medication.getMedicineUID()).removeValue();
-                finish();
+                            }
+                        });
+
+                builder.show();
             }
         });
 

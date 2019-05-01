@@ -162,21 +162,21 @@ public class AddMedicine extends AppCompatActivity {
                             firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/taken/count").setValue(0);
                             firebaseDatabase.child("claimed/").child(medicineUID).setValue(true);
 
-                            Snackbar.make(findViewById(R.id.addMedicineLayout), "Success: Medicine added", Snackbar.LENGTH_LONG);
+                            Snackbar.make(findViewById(R.id.medicineListContainer), "Success: Medicine added", Snackbar.LENGTH_LONG);
                             finish();
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(AddMedicine.this)
-                                    .setMessage("Failed: Medicine UID already registered\n Please try again.")
+                                    .setMessage("Failed: Medicine UID already registered\n Please ensure that your medication UID was entered correctly.")
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             finish();
                                         }
                                     })
-                                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            System.exit(0);
+                                            finish();
                                         }
                                     });
                             builder.show();

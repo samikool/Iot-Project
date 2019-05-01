@@ -33,7 +33,8 @@ public class Messanger extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle((String) data.get("title"))
-                .setContentText((String) data.get("content"))
+                .setContentText((String) data.get("medicine"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText((String) data.get("content")))
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
