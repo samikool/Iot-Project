@@ -78,7 +78,7 @@ public class ServerAnalyzer implements Runnable{
 
                     int max = 1;
                     if(times.length > 0){
-                        max = maxRepeating(times, times.length, 22);
+                        max = maxRepeating(times, times.length, 12);
                     }
 
                     String lastDose = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/").child(medicineSnapshot.getKey()).child("/lastDose").getValue();
