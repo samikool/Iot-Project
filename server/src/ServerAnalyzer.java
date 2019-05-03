@@ -77,7 +77,7 @@ public class ServerAnalyzer implements Runnable{
                     }
 
                     int max = 1;
-                    if(times.length > 0){
+                    if(times.length > 5){
                         max = maxRepeating(times, times.length, 23);
                     }
 

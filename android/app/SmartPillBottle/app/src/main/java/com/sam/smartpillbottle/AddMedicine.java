@@ -161,8 +161,9 @@ public class AddMedicine extends AppCompatActivity {
                             firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/nextDose").setValue(dateString);
                             firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/taken/count").setValue(0);
                             firebaseDatabase.child("claimed/").child(medicineUID).setValue(true);
+                            firebaseDatabase.child("users/" + firebaseUser.getUid() + "/medicine/" + medicineUID + "/notify").setValue(false);
 
-                            Snackbar.make(findViewById(R.id.medicineListContainer), "Success: Medicine added", Snackbar.LENGTH_LONG);
+                            Snackbar.make(findViewById(R.id.addMedicineLayout), "Success: Medicine added", Snackbar.LENGTH_LONG);
                             finish();
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(AddMedicine.this)
