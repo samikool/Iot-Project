@@ -17,7 +17,6 @@ public class ServerAnalyzer implements Runnable{
     private static DatabaseReference firebaseDatabase;
     private DataSnapshot bigDataSnapshot;
     private ArrayList usernameKeys;
-    private ArrayList medicineSnapshotList;
     private ArrayList<int[]> dateList;
     private int clusters;
     private volatile boolean dataReady;
@@ -28,7 +27,6 @@ public class ServerAnalyzer implements Runnable{
     public void run() {
         executor = Server.getExecutor();
         usernameKeys = new ArrayList<String>(128);
-        medicineSnapshotList = new ArrayList<String>(256);
         dateList = new ArrayList<int[]>(256);
 
         while(true){
@@ -124,6 +122,7 @@ public class ServerAnalyzer implements Runnable{
                 String daysRemaining = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/remainingDays").getValue();
                 boolean notify = (boolean) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/notify").getValue();
                 if(Integer.parseInt(daysRemaining) < 15 && notify){
+                    firebaseDatabase.child("/users/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/notify").setValue(false, null);
                     for(DataSnapshot tokenSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
                         if(!tokenSnapshot.getKey().equals("count")){
                             String token = (String) tokenSnapshot.getValue();
@@ -135,7 +134,6 @@ public class ServerAnalyzer implements Runnable{
                             NotificationSender notificationSender = new NotificationSender(token, title, medicine, message);
                             executor.execute(notificationSender);
 
-                            firebaseDatabase.child("/users/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/notify").setValue(false, null);
                         }
                     }
                 }
