@@ -233,7 +233,7 @@ public class Server {
                                             String latitude = convertLocation(data[3], data[4]);
                                             String longitude = convertLocation(data[5], data[6]);
                                             latitude = String.valueOf(Double.parseDouble(latitude) + .003316);
-                                            longitude = String.valueOf(Double.parseDouble(longitude) * -1 + .0015576667);
+                                            longitude = String.valueOf(Double.parseDouble(longitude) * -1 - .0015576667);
                                             //System.out.println("/users/" + users.getKey() + "/" + medicine.getKey() + "/latitude");
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/latitude").setValue(latitude, null);
                                             firebaseDatabase.child("/users/" + users.getKey() + "/medicine/" + medicine.getKey() + "/longitude").setValue(longitude, null);
