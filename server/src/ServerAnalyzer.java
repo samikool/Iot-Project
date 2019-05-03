@@ -71,8 +71,8 @@ public class ServerAnalyzer implements Runnable{
                         dateList.add(tempIntArray);
                     }
 
-                    File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
-                    //File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
+                    //File trainingData = new File("C:\\Users\\Sam-Laptop\\git\\IoT-Project\\server\\output\\jar\\TrainingData.csv");
+                    File trainingData = new File("/home/sam/IoT-Project/server/output/jar/TrainingData.csv");
                     int[] times = new int[dateCount];
                     for(int k=0; k<dateCount; k++){
                         times[k] = MachineLearning.knearest(trainingData,  dateList.get(k), 2);
@@ -122,8 +122,8 @@ public class ServerAnalyzer implements Runnable{
                 }
 
                 String daysRemaining = (String) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/remainingDays").getValue();
-
-                if(Integer.parseInt(daysRemaining) < 15){
+                boolean notify = (boolean) bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/notify").getValue();
+                if(Integer.parseInt(daysRemaining) < 15 && notify){
                     for(DataSnapshot tokenSnapshot : bigDataSnapshot.child("/" + usernameKeys.get(i)).child("/tokens").getChildren()){
                         if(!tokenSnapshot.getKey().equals("count")){
                             String token = (String) tokenSnapshot.getValue();
@@ -131,8 +131,11 @@ public class ServerAnalyzer implements Runnable{
                             String medicine = (String) medicineSnapshot.child("/name").getValue();
                             String message = "Your medicine " + medicineSnapshot.child("/name").getValue() + " is running low. You may want to get a refill soon.";
 
+
                             NotificationSender notificationSender = new NotificationSender(token, title, medicine, message);
                             executor.execute(notificationSender);
+
+                            firebaseDatabase.child("/users/" + usernameKeys.get(i)).child("/medicine/" + medicineSnapshot.getKey()).child("/notify").setValue(false, null);
                         }
                     }
                 }
